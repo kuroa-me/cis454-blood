@@ -69,6 +69,8 @@ var api = {
 
 var handlers = [];
 
+// Misc ///////////////////////////////////////////////////////////////////////
+
 api.misc.getbloodtypes = async function (req, res) {
     var result = await sql('select * from blood_type');
     return {
@@ -77,6 +79,8 @@ api.misc.getbloodtypes = async function (req, res) {
     };
 };
 handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
+
+// User ///////////////////////////////////////////////////////////////////////
 
 api.user.auth = async function (req, res) {
     var { username, password } = req.body;
@@ -214,6 +218,51 @@ api.user.logout = async function (req, res) {
     return {ok: true};
 };
 handlers.push({path: '/user/logout', handler: api.user.logout});
+
+// Donor //////////////////////////////////////////////////////////////////////
+
+api.donor.donate = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var { timestamp } = req.body;
+
+    if (!timestamp) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    var result = await sql('select type from user where id = ?', [s.id]);
+    if (result.length != 1) throw "user.length not 1."
+
+    var infos = await sql('select blood_type from user_info where user_id = ?', [s.id]);
+    if (infos.length != 1) throw "user.length not 1."
+
+    var user = result[0];
+    if (user.type != 'DONOR') {
+        return {
+            ok: false,
+            error: 'Only donor can donate.'
+        };
+    }
+
+    var info = infos[0];
+
+    await sql('insert into blood SET ?', {
+        from_id: s.id, date_received: timestamp, blood_type: info.blood_type
+    });
+
+    return {ok: true};
+};
+handlers.push({path: '/donor/donate', handler: api.donor.donate});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
