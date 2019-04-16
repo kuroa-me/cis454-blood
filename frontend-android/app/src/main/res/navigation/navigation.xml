@@ -6,18 +6,18 @@
     app:startDestination="@id/select">
 
     <fragment
-        android:id="@+id/login"
+        android:id="@+id/log_logbtn"
         android:name="com.example.fragmentedas.login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
-        android:id="@+id/register"
+        android:id="@+id/sel_regbtn"
         android:name="com.example.fragmentedas.register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_register_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/log_logbtn" />
     </fragment>
     <fragment
         android:id="@+id/select"
@@ -26,9 +26,9 @@
         tools:layout="@layout/fragment_select" >
         <action
             android:id="@+id/action_to_register"
-            app:destination="@id/register" />
+            app:destination="@id/sel_regbtn" />
         <action
             android:id="@+id/action_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/log_logbtn" />
     </fragment>
 </navigation>

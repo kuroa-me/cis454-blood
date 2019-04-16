@@ -13,66 +13,69 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/reg_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:ems="10"
+            android:hint="@string/username"
             android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/password"
+            app:layout_constraintBottom_toTopOf="@+id/log_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/log_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
             android:ems="10"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/email"
+            app:layout_constraintBottom_toTopOf="@+id/log_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/log_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="28dp"
             android:ems="10"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/phone"
+            app:layout_constraintBottom_toTopOf="@+id/log_phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/phone"
+            android:id="@+id/log_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="148dp"
             android:ems="10"
+            android:hint="@string/phone"
             android:inputType="phone"
-            app:layout_constraintBottom_toTopOf="@+id/register"
+            app:layout_constraintBottom_toTopOf="@+id/sel_regbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/sel_regbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="120dp"
-            android:text="Button"
+            android:text="@string/register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

@@ -13,19 +13,20 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/log_logbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="192dp"
+            android:layout_marginBottom="196dp"
             android:text="@string/login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/log_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -33,24 +34,25 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="60dp"
             android:ems="10"
+            android:hint="@string/username"
             android:inputType="textPersonName"
-            android:text="User Name"
-            app:layout_constraintBottom_toTopOf="@+id/password"
+            app:layout_constraintBottom_toTopOf="@+id/log_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/log_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="140dp"
+            android:layout_marginBottom="144dp"
             android:ems="10"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/login"
+            app:layout_constraintBottom_toTopOf="@+id/log_logbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

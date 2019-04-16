@@ -76,14 +76,14 @@ public class select extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        Button loginbtn = getView().findViewById(R.id.login);
+        Button loginbtn = getView().findViewById(R.id.sel_logbtn);
         loginbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Navigation.findNavController(view).navigate(R.id.action_to_login);
             }
         });
-        Button regbtn = getView().findViewById(R.id.register);
+        Button regbtn = getView().findViewById(R.id.sel_regbtn);
         regbtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_register, null));
     }
 
