@@ -68,8 +68,6 @@ var api = {
 var handlers = [];
 
 api.misc.getbloodtypes = async function (req, res) {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-
     var result = await sql('select * from blood_type');
     res.end(JSON.stringify({
         ok: true,
@@ -82,30 +80,28 @@ api.user.auth = async function (req, res) {
     var { username, password } = req.body;
 
     if (!username || !password) {
-        res.end(JSON.stringify({
+        return {
             ok: false,
             error: 'Empty username or password.'
-        }));
-        return;
+        };
     }
 
     var result = await sql('select id from user where password = MD5(?) and username = ?',
                            [password, username]);
 
     if (result.length == 0) {
-        res.end(JSON.stringify({
+        return {
             ok: false,
             error: 'Incorrect username or password.'
-        }));
-        return;
+        };
     }
 
     if (result.length > 1) throw "mutiple user match.";
 
-    res.end(JSON.stringify({
+    return {
         ok: true,
         token: session.new(result[0].id)
-    }));
+    };
 };
 handlers.push({path: '/user/auth', handler: api.user.auth});
 
@@ -113,21 +109,19 @@ api.user.register = async function (req, res) {
     var { username, password, is_donor, first_name, last_name, blood_type, age, sex, height } = req.body;
 
     if (!username || !password || !first_name || !last_name || !blood_type || !age || !sex || !height) {
-        res.end(JSON.stringify({
+        return {
             ok: false,
             error: 'Missing info.'
-        }));
-        return;
+        };
     }
 
     var user = await sql('select id from user where username = ?', [username]);
 
     if (user.length > 0) {
-        res.end(JSON.stringify({
+        return {
             ok: false,
             error: 'User already exist.'
-        }));
-        return;
+        };
     }
 
     await sql('insert into user SET ?', {
@@ -144,12 +138,34 @@ api.user.register = async function (req, res) {
         user_id: new_user_id, blood_type, sex, age, height
     });
 
-    res.end(JSON.stringify({
+    return {
         ok: true,
         token: session.new(new_user_id)
-    }));
+    };
 };
 handlers.push({path: '/user/register', handler: api.user.register});
+
+api.user.get = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user_base = await sql('select username, first_name, last_name, type from user where id = ?', [s.id]);
+    var user_info = await sql('select blood_type, age, sex, height from user_info where user_id = ?', [s.id]);
+
+    if (user_base.length != 1 || user_info.length != 1)
+        throw "user_base/user_info length not 1.";
+
+    var result = Object.assign(user_base[0], user_info[0]);
+
+    return Object.assign({ok: true}, result);
+};
+handlers.push({path: '/user/get', handler: api.user.get});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
@@ -216,11 +232,12 @@ const root_handler = function (req, res) {
         }
     })).then(async body => {
         try {
-            await find_handler(url.pathname)({
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(await find_handler(url.pathname)({
                 path: url.pathname, 
                 query: url.query, 
                 method, headers, body
-            }, res);
+            }, res)));
         } catch (e) {
             console.log('Handler returned error: ', e);
             res.end(JSON.stringify({
