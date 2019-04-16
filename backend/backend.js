@@ -69,10 +69,10 @@ var handlers = [];
 
 api.misc.getbloodtypes = async function (req, res) {
     var result = await sql('select * from blood_type');
-    res.end(JSON.stringify({
+    return {
         ok: true,
         types: result
-    }));
+    };
 };
 handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
 
