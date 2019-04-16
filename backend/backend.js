@@ -167,6 +167,46 @@ api.user.get = async function (req, res) {
 };
 handlers.push({path: '/user/get', handler: api.user.get});
 
+api.user.update = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var { password, first_name, last_name, blood_type, age, sex, height } = req.body;
+
+    var query = '', vars = [];
+
+    if (!first_name || !last_name || !blood_type || !age || !sex || !height) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    if (!password || password == '') {
+        query = 'update user SET first_name = ?, last_name = ? where id = ?';
+        vars = [first_name, last_name, s.id];
+    } else {
+        query = 'update user SET first_name = ?, last_name = ?, password = MD5(?) where id = ?';
+        vars = [first_name, last_name, password, s.id];
+    }
+
+    await Promise.all([
+        sql(query, vars), 
+        sql('update user_info SET blood_type = ?, age = ?, sex = ?, height = ? where user_id = ?',
+            [blood_type, age, sex, height, s.id])
+    ]);
+
+    return {ok: true};
+
+};
+handlers.push({path: '/user/update', handler: api.user.update});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
