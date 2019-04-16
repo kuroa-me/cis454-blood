@@ -78,6 +78,39 @@ api.misc.getbloodtypes = async function (req, res) {
 };
 handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
 
+api.user.auth = async function (req, res) {
+    var { username, password } = req.body;
+
+    if (!username || !password) {
+        res.end(JSON.stringify({
+            ok: false,
+            error: 'Empty username or password.'
+        }));
+        return;
+    }
+
+    var result = await sql('query', 'select id from user where password = MD5(?) and username = ?',
+                           [password, username]);
+
+    if (result.length == 0) {
+        res.end(JSON.stringify({
+            ok: false,
+            error: 'Incorrect username or password.'
+        }));
+        return;
+    }
+
+    console.log(result);
+
+    if (result.length > 1) throw "mutiple user match.";
+
+    res.end(JSON.stringify({
+        ok: true,
+        token: session.new(result[0].id)
+    }));
+};
+handlers.push({path: '/user/auth', handler: api.user.auth});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,7 +125,7 @@ const SQL = MYSQL.createPool({
 
 const sql = function(fn, ...args) {
     return new Promise ((res, rej) => {
-        SQL[fn]('select * from blood_type', (e, r, f) => {
+        SQL[fn](...args, (e, r, f) => {
             if (e) rej(e);
             else res(r);
         });
