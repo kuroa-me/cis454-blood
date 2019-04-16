@@ -70,7 +70,7 @@ var handlers = [];
 api.misc.getbloodtypes = async function (req, res) {
     res.writeHead(200, {'Content-Type': 'application/json'});
 
-    var result = await sql('query', 'select * from blood_type');
+    var result = await sql('select * from blood_type');
     res.end(JSON.stringify({
         ok: true,
         types: result
@@ -89,7 +89,7 @@ api.user.auth = async function (req, res) {
         return;
     }
 
-    var result = await sql('query', 'select id from user where password = MD5(?) and username = ?',
+    var result = await sql('select id from user where password = MD5(?) and username = ?',
                            [password, username]);
 
     if (result.length == 0) {
@@ -100,8 +100,6 @@ api.user.auth = async function (req, res) {
         return;
     }
 
-    console.log(result);
-
     if (result.length > 1) throw "mutiple user match.";
 
     res.end(JSON.stringify({
@@ -110,6 +108,48 @@ api.user.auth = async function (req, res) {
     }));
 };
 handlers.push({path: '/user/auth', handler: api.user.auth});
+
+api.user.register = async function (req, res) {
+    var { username, password, is_donor, first_name, last_name, blood_type, age, sex, height } = req.body;
+
+    if (!username || !password || !first_name || !last_name || !blood_type || !age || !sex || !height) {
+        res.end(JSON.stringify({
+            ok: false,
+            error: 'Missing info.'
+        }));
+        return;
+    }
+
+    var user = await sql('select id from user where username = ?', [username]);
+
+    if (user.length > 0) {
+        res.end(JSON.stringify({
+            ok: false,
+            error: 'User already exist.'
+        }));
+        return;
+    }
+
+    await sql('insert into user SET ?', {
+        username, first_name, last_name, password: MD5(password), type: is_donor ? 'DONOR' : 'REQUESTER'
+    });
+
+    var new_user = await sql('select id from user where username = ?', [username]);
+
+    if (new_user.length > 1) throw "after register, mutiple user with id " + username + " exist.";
+
+    var new_user_id = new_user[0].id;
+
+    await sql('insert into user_info SET ?', {
+        user_id: new_user_id, blood_type, sex, age, height
+    });
+
+    res.end(JSON.stringify({
+        ok: true,
+        token: session.new(new_user_id)
+    }));
+};
+handlers.push({path: '/user/register', handler: api.user.register});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
@@ -123,9 +163,9 @@ const SQL = MYSQL.createPool({
     connectionLimit: 64
 });
 
-const sql = function(fn, ...args) {
+const sql = function(...args) {
     return new Promise ((res, rej) => {
-        SQL[fn](...args, (e, r, f) => {
+        SQL.query(...args, (e, r, f) => {
             if (e) rej(e);
             else res(r);
         });
