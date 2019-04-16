@@ -57,7 +57,35 @@ var session = new SessionManager();
 // Handlers
 ///////////////////////////////////////////////////////////////////////////////
 
+var api = {
+    misc: {},
+    user: {},
+    donor: {},
+    requester: {},
+    admin: {}
+};
+
 var handlers = [];
+
+api.misc.getbloodtypes = function (req, res) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    sql.query('select * from blood_type', (e, r, f) => {
+        if (e) {
+            res.end(JSON.stringify({
+                ok: false,
+                error: 'Database server error.'
+            }));
+            return;
+        }
+
+        res.end(JSON.stringify({
+            ok: true,
+            types: r
+        }));
+    });
+};
+handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
