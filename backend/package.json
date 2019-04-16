@@ -1,0 +1,16 @@
+{
+  "name": "blood-backend",
+  "version": "0.0.1",
+  "description": "blood system backend.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Honghao Zeng <hozeng@syr.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "md5": "^2.2.1",
+    "mysql": "^2.16.0",
+    "uuid": "^3.3.2"
+  }
+}
