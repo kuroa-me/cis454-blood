@@ -22,8 +22,6 @@ const URL = require('url');
 const MYSQL = require('mysql');
 const UUID = require('uuid');
 const MD5 = require('md5');
-const FS = require('fs');
-const PATH = require('path');
 
 ///////////////////////////////////////////////////////////////////////////////
 // Session Manager
