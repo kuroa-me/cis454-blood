@@ -6,4 +6,5 @@
     <string name="password">Password</string>
     <string name="email">Email Address</string>
     <string name="phone">Phone Number</string>
+    <string name="logout">Log Out</string>
 </resources>
