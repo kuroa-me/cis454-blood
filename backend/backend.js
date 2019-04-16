@@ -247,50 +247,51 @@ const find_handler = function(path) {
     };
 };
 
-const root_handler = function (req, res) {
+const body_fetch = function (req) {
+    var headers = req.headers;
+
+    return new Promise((reslove, reject) => {
+        if (req.method != 'POST') {
+            reject("unsupported HTTP method.");
+            return;
+        }
+        var body = '';
+        req.on('data', d => body += d);
+        req.on('end', () => {
+            if (headers["content-type"] == 'application/json') {
+                try {
+                    reslove(JSON.parse(body));
+                } catch (e) {
+                    reject(e);
+                }
+            } else reject("unsupported content-type.");
+        });
+        req.on('abort', reject);
+        req.on('close', reject);
+    });
+};
+
+const root_handler = async function (req, res) {
     var url = URL.parse(req.url, true);
     var method = req.method;
     var headers = req.headers;
-    (new Promise((reso, rej) => {
-        if (req.method != 'POST') reso('');
-        else {
-            var body = '';
-            req.on('data', d => body += d);
-            req.on('end', () => {
-                if (headers["content-type"] == 'application/json') {
-                    try {
-                        reso(JSON.parse(body));
-                    } catch (e) {
-                        res.writeHead(404, {'Content-Type': 'application/json'});
-                        res.end(JSON.stringify({ok: false, errmsg: "Error: " + e}));
-                        rej(e);
-                    }
-                } else reso({});
-            });
-            req.on('aborted', rej);
-            req.on('close', rej);
-        }
-    })).then(async body => {
-        try {
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify(await find_handler(url.pathname)({
-                path: url.pathname, 
-                query: url.query, 
-                method, headers, body
-            }, res)));
-        } catch (e) {
-            console.log('Handler returned error: ', e);
-            res.end(JSON.stringify({
-                ok: false,
-                error: 'Internal error.'
-            }));
-        }
-        
-    }).catch(err => {
-        console.log("Error while handling request: "+ err);
-    })
-
     
+    try {
+        var body = await body_fetch(req);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(await find_handler(url.pathname)({
+            path: url.pathname, 
+            query: url.query, 
+            method, headers, body
+        }, res)));
+    } catch (e) {
+        console.log('Error Handling Request: ', e);
+        res.end(JSON.stringify({
+            ok: false,
+            error: 'Internal error.'
+        }));
+    }
+
 };
 
 var server = HTTP.createServer(root_handler);
