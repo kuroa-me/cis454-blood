@@ -47,6 +47,10 @@ const SessionManager = function () {
             if (!token) return false;
             var candidates = sessions.filter(s => s.token == token);
             return candidates.length > 0 ? candidates[0] : false; 
+        },
+        remove: function(token) {
+            if (!token) return false;
+            sessions = sessions.filter(s => s.token != token);
         }
     };
 }
@@ -206,6 +210,12 @@ api.user.update = async function (req, res) {
 
 };
 handlers.push({path: '/user/update', handler: api.user.update});
+
+api.user.logout = async function (req, res) {
+    session.remove(req.body.token);
+    return {ok: true};
+};
+handlers.push({path: '/user/logout', handler: api.user.logout});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
