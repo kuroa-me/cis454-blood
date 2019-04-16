@@ -67,23 +67,14 @@ var api = {
 
 var handlers = [];
 
-api.misc.getbloodtypes = function (req, res) {
+api.misc.getbloodtypes = async function (req, res) {
     res.writeHead(200, {'Content-Type': 'application/json'});
 
-    sql.query('select * from blood_type', (e, r, f) => {
-        if (e) {
-            res.end(JSON.stringify({
-                ok: false,
-                error: 'Database server error.'
-            }));
-            return;
-        }
-
-        res.end(JSON.stringify({
-            ok: true,
-            types: r
-        }));
-    });
+    var result = await sql('query', 'select * from blood_type');
+    res.end(JSON.stringify({
+        ok: true,
+        types: result
+    }));
 };
 handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
 
@@ -91,13 +82,22 @@ handlers.push({path: '/misc/getbloodtypes', handler: api.misc.getbloodtypes});
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
 
-const sql = MYSQL.createPool({
+const SQL = MYSQL.createPool({
     host: MYSQL_HOST,
     user: MYSQL_USER,
     password: MYSQL_PASS,
     database: MYSQL_DB,
     connectionLimit: 64
 });
+
+const sql = function(fn, ...args) {
+    return new Promise ((res, rej) => {
+        SQL[fn]('select * from blood_type', (e, r, f) => {
+            if (e) rej(e);
+            else res(r);
+        });
+    });
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // HTTP
@@ -141,12 +141,21 @@ const root_handler = function (req, res) {
             req.on('aborted', rej);
             req.on('close', rej);
         }
-    })).then(body => {
-        find_handler(url.pathname)({
-            path: url.pathname, 
-            query: url.query, 
-            method, headers, body
-        }, res);
+    })).then(async body => {
+        try {
+            await find_handler(url.pathname)({
+                path: url.pathname, 
+                query: url.query, 
+                method, headers, body
+            }, res);
+        } catch (e) {
+            console.log('Handler returned error: ', e);
+            res.end(JSON.stringify({
+                ok: false,
+                error: 'Internal error.'
+            }));
+        }
+        
     }).catch(err => {
         console.log("Error while handling request: "+ err);
     })
