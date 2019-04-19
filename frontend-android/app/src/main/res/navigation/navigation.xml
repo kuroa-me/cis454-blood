@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/log_logbtn"
-        android:name="com.example.fragmentedas.login"
+        android:name="com.example.bloodbank.login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/sel_regbtn"
-        android:name="com.example.fragmentedas.register"
+        android:name="com.example.bloodbank.register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/select"
-        android:name="com.example.fragmentedas.select"
+        android:name="com.example.bloodbank.select"
         android:label="fragment_select"
         tools:layout="@layout/fragment_select" >
         <action

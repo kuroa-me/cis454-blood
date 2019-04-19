@@ -1,4 +1,4 @@
-package com.example.drawerexample;
+package com.example.bloodbank;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,19 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import androidx.navigation.Navigation;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link select.OnFragmentInteractionListener} interface
+ * {@link register.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link select#newInstance} factory method to
+ * Use the {@link register#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class select extends Fragment {
+public class register extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,7 +31,7 @@ public class select extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public select() {
+    public register() {
         // Required empty public constructor
     }
 
@@ -43,11 +41,11 @@ public class select extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment select.
+     * @return A new instance of fragment register.
      */
     // TODO: Rename and change types and number of parameters
-    public static select newInstance(String param1, String param2) {
-        select fragment = new select();
+    public static register newInstance(String param1, String param2) {
+        register fragment = new register();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,23 +66,7 @@ public class select extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-        return inflater.inflate(R.layout.fragment_select, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        Button loginbtn = getView().findViewById(R.id.sel_logbtn);
-        loginbtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Navigation.findNavController(view).navigate(R.id.action_to_login);
-            }
-        });
-        Button regbtn = getView().findViewById(R.id.sel_regbtn);
-        regbtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_register, null));
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
