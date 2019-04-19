@@ -264,6 +264,34 @@ api.donor.donate = async function (req, res) {
 };
 handlers.push({path: '/donor/donate', handler: api.donor.donate});
 
+api.donor.get_donates = async function(req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var donate_history = await sql('select date_received, to_id, avaliable, date_used from blood where from_id = ?', [s.id]);
+
+    var history = donate_history.map(hist => {
+        return {
+            date_received: hist.date_received,
+            used: !hist.avaliable,
+            date_used: hist.date_used,
+            to_id: hist.to_id
+        };
+    });
+
+    return {
+        ok: true,
+        history
+    };
+};
+handlers.push({path: '/donor/get_donates', handler: api.donor.get_donates});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
