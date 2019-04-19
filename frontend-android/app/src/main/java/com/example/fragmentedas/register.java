@@ -1,4 +1,4 @@
-package com.example.fragmentedas;
+package com.example.drawerexample;
 
 import android.content.Context;
 import android.net.Uri;
