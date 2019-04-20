@@ -1,25 +1,27 @@
 package com.example.bloodbank;
 
-
-//import com.loopj.android.http.*;
-//import cz.msebera.android.httpclient.Header;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
-interface callBack{
+
+interface RequestCallback{
     void process(JSONObject obj);
 }
 
 public class APICaller {
+    private String urlbase;
 
-    public void jsonRequest(String url, JSONObject req, final com.example.bloodbank.callBack cb) {
-        JsonObjectRequest jsonObejectRequest = new JsonObjectRequest (Request.Method.GET, url, req,
+    public APICaller(String urlbase){
+        this.urlbase = urlbase;
+    }
+    public void jsonRequest(String method, JSONObject req, final com.example.bloodbank.RequestCallback cb) {
+        JsonObjectRequest jsonObejectRequest = new JsonObjectRequest (Request.Method.GET, urlbase + method, req,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -50,8 +52,11 @@ public class APICaller {
     }
 
     });*/
-    void authentication(String username, String password){
-
+    void authentication(String username, String password, RequestCallback cb) throws JSONException {
+        JSONObject auth = new JSONObject();
+        auth.put("name", username);
+        auth.put("password",password);
+        jsonRequest("auth", auth, cb);
     }
 
 }
