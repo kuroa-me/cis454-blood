@@ -1,10 +1,13 @@
 package com.example.bloodbank;
 
+import android.net.Uri;
+
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -18,11 +21,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,select.OnFragmentInteractionListener, register.OnFragmentInteractionListener, login.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,12 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){}
+
 
     @Override
     public void onBackPressed() {
@@ -72,7 +82,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.select) {
+            NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(findViewById(R.id.nav_host_fragment)));
+            Log.i("click", "onsetting");
             return true;
         }
 
@@ -85,12 +97,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+        if (id == R.id.nav_signout) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new select()).commit();
+        } else if (id == R.id.nav_register) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new register()).commit();
+        } else if (id == R.id.nav_login) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new login()).commit();
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {

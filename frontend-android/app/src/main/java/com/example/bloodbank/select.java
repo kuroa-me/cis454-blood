@@ -3,6 +3,7 @@ package com.example.bloodbank;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -109,6 +110,19 @@ public class select extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        Log.d("onDetach","detached");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("onDestroy","destroyed");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d("onStop","stopped");
     }
 
     /**
