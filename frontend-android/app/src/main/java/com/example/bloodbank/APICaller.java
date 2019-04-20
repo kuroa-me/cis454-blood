@@ -1,4 +1,4 @@
-package com.example.fragmentedas;
+package com.example.bloodbank;
 
 
 //import com.loopj.android.http.*;
@@ -13,12 +13,12 @@ import org.json.JSONObject;
 
 
 interface callBack{
-       void process(JSONObject obj);
+    void process(JSONObject obj);
 }
 
-public class api_lib {
+public class APICaller {
 
-    public void jsonRequest(String url, JSONObject req, final callBack cb) {
+    public void jsonRequest(String url, JSONObject req, final com.example.bloodbank.callBack cb) {
         JsonObjectRequest jsonObejectRequest = new JsonObjectRequest (Request.Method.GET, url, req,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -26,12 +26,12 @@ public class api_lib {
                         cb.process(response);
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                    }
+            }
 
-                });
+        });
     }
 
 
@@ -50,6 +50,11 @@ public class api_lib {
     }
 
     });*/
+    void authentication(String username, String password){
 
+    }
 
 }
+
+
+
