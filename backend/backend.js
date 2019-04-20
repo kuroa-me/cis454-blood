@@ -320,6 +320,14 @@ api.donor.request.list = async function (req, res) {
 
     var bt = user_info[0].blood_type;
     var request_ids = await sql('select id, by_user from request where blood_type = ? and accepted = 0', bt);
+
+    if (request_ids.length <= 0) {
+        return {
+            ok: true,
+            requests: []
+        };
+    }
+
     var request_uids_arr = request_ids.map(r => r.by_user);
     var requester_names = await sql('select id, first_name, last_name from user where id in ?', [[request_uids_arr]]);
     var requester_infos = await sql('select user_id, age, sex from user_info where user_id in ?', [[request_uids_arr]]);
@@ -383,7 +391,7 @@ api.donor.request.accept = async function (req, res) {
     var request = await sql('select by_user, accepted, blood_type from request where id = ?', [request_id]);
     if (request.length != 1) throw "req.len ! = 1";
 
-    if (request[0].accept === 1) {
+    if (request[0].accepted === 1) {
         return {
             ok: false,
             error: 'This request has already been accepted.'
