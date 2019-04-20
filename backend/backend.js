@@ -317,9 +317,17 @@ api.donor.request.list = async function (req, res) {
     var user_info = await sql('select blood_type from user_info where user_id = ?', [s.id]);
 
     if (user_info.length != 1) throw "info.len != 1";
-    
+
     var bt = user_info[0].blood_type;
     var request_ids = await sql('select id, by_user from request where blood_type = ? and accepted = 0', bt);
+
+    if (request_ids.length <= 0) {
+        return {
+            ok: true,
+            requests: []
+        };
+    }
+
     var request_uids_arr = request_ids.map(r => r.by_user);
     var requester_names = await sql('select id, first_name, last_name from user where id in ?', [[request_uids_arr]]);
     var requester_infos = await sql('select user_id, age, sex from user_info where user_id in ?', [[request_uids_arr]]);
@@ -344,6 +352,82 @@ api.donor.request.list = async function (req, res) {
     
 };
 handlers.push({path: '/donor/request/list', handler: api.donor.request.list});
+
+api.donor.request.accept = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    var request_id = req.body.request_id;
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    if (!request_id) {
+        return {
+            ok: false,
+            error: 'Missing info'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'DONOR') {
+        return {
+            ok: false,
+            error: 'Only donor can accept requests.'
+        };
+    }
+
+    var user_info = await sql('select blood_type from user_info where user_id = ?', [s.id]);
+
+    if (user_info.length != 1) throw "info.len != 1";
+
+    var bt = user_info[0].blood_type;
+
+    var request = await sql('select by_user, accepted, blood_type from request where id = ?', [request_id]);
+    if (request.length != 1) throw "req.len ! = 1";
+
+    if (request[0].accepted === 1) {
+        return {
+            ok: false,
+            error: 'This request has already been accepted.'
+        };
+    }
+
+    var req_bt = request[0].blood_type;
+
+    if (req_bt != bt) {
+        return {
+            ok: false,
+            error: 'bloodtype mismatch.'
+        };
+    }
+
+    var bloods = await sql('select id from blood where from_id = ? and blood_type = ? and avaliable = 1', [s.id, req_bt]);
+
+    if (bloods.length == 0) {
+        return {
+            ok: false,
+            error: 'No blood avaliable'  
+        };
+    }
+
+    var blood_id = bloods[0].id;
+
+    await Promise.all([
+        sql('update blood SET avaliable = 0, to_id = ? where id = ?', [request[0].by_user, blood_id]),
+        sql('update request SET accepted = 1, blood_id = ? where id = ?', [blood_id, request_id])
+    ]);
+
+    return {
+        ok: true
+    };
+};
+handlers.push({path: '/donor/request/accept', handler: api.donor.request.accept});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
