@@ -3,32 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/select">
+    app:startDestination="@id/des_select">
 
     <fragment
-        android:id="@+id/log_logbtn"
+        android:id="@+id/des_log"
         android:name="com.example.bloodbank.login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
-        android:id="@+id/sel_regbtn"
+        android:id="@+id/des_reg"
         android:name="com.example.bloodbank.register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_register_to_login"
-            app:destination="@id/log_logbtn" />
+            app:destination="@id/des_log" />
     </fragment>
     <fragment
-        android:id="@+id/select"
+        android:id="@+id/des_select"
         android:name="com.example.bloodbank.select"
         android:label="fragment_select"
         tools:layout="@layout/fragment_select" >
         <action
             android:id="@+id/action_to_register"
-            app:destination="@id/sel_regbtn" />
+            app:destination="@id/des_reg" />
         <action
             android:id="@+id/action_to_login"
-            app:destination="@id/log_logbtn" />
+            app:destination="@id/des_log" />
     </fragment>
 </navigation>

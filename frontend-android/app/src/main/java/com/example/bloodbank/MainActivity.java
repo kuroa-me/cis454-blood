@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -21,20 +20,36 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,select.OnFragmentInteractionListener, register.OnFragmentInteractionListener, login.OnFragmentInteractionListener {
+        implements select.OnFragmentInteractionListener, register.OnFragmentInteractionListener, login.OnFragmentInteractionListener {
+
+    private DrawerLayout drawerLayout;
+    private NavController navController;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+
+        NavigationUI.setupWithNavController(navigationView,navController);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +58,19 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+
+/*
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
+                .setDrawerLayout(drawerLayout)
+                .build();
+*/
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Allows NavigationUI to support proper up navigation or the drawer layout
+        // drawer menu, depending on the situation.
+        return NavigationUI.navigateUp(navController, drawerLayout);
 
     }
 
@@ -82,37 +103,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.select) {
+        if (id == R.id.des_select) {
             NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(findViewById(R.id.nav_host_fragment)));
-            Log.i("click", "onsetting");
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_signout) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new select()).commit();
-        } else if (id == R.id.nav_register) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new register()).commit();
-        } else if (id == R.id.nav_login) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new login()).commit();
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

@@ -84,7 +84,7 @@ public class select extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_to_login);
             }
         });
-        Button regbtn = getView().findViewById(R.id.sel_regbtn);
+        Button regbtn = getView().findViewById(R.id.des_reg);
         regbtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_register, null));
     }
 
