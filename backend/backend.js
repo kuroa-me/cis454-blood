@@ -292,6 +292,59 @@ api.donor.get_donates = async function(req, res) {
 };
 handlers.push({path: '/donor/get_donates', handler: api.donor.get_donates});
 
+api.donor.request = {};
+
+api.donor.request.list = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+
+    if (user.length != 1) throw "user.len != 1";
+    if (user[0].type != 'DONOR') {
+        return {
+            ok: false,
+            error: 'Only donor can list requests.'
+        };
+    }
+
+    var user_info = await sql('select blood_type from user_info where user_id = ?', [s.id]);
+
+    if (user_info.length != 1) throw "info.len != 1";
+    
+    var bt = user_info[0].blood_type;
+    var request_ids = await sql('select id, by_user from request where blood_type = ? and accepted = 0', bt);
+    var request_uids_arr = request_ids.map(r => r.by_user);
+    var requester_names = await sql('select id, first_name, last_name from user where id in ?', [[request_uids_arr]]);
+    var requester_infos = await sql('select user_id, age, sex from user_info where user_id in ?', [[request_uids_arr]]);
+
+    if (requester_names.length != requester_infos.length) throw "reqn.len != reqi.len";
+    var requests = requester_names.map(r => {
+        var reqid = request_ids.filter(rid => r.id == rid.by_user)[0].id;
+        var req_info = requester_infos.filter(rinfo => r.id == rinfo.user_id)[0];
+
+        return {
+            id: reqid,
+            requester_name: `${r.first_name} ${r.last_name}`,
+            requester_age: req_info.age,
+            requester_sex: req_info.sex
+        };
+    });
+
+    return {
+        ok: true,
+        requests
+    };
+    
+};
+handlers.push({path: '/donor/request/list', handler: api.donor.request.list});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
