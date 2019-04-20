@@ -419,8 +419,8 @@ api.donor.request.accept = async function (req, res) {
     var blood_id = bloods[0].id;
 
     await Promise.all([
-        await sql('update blood SET avaliable = 0, to_id = ? where id = ?', [request[0].by_user, blood_id]),
-        await sql('update request SET accepted = 1, blood_id = ? where id = ?', [blood_id, request_id])
+        sql('update blood SET avaliable = 0, to_id = ? where id = ?', [request[0].by_user, blood_id]),
+        sql('update request SET accepted = 1, blood_id = ? where id = ?', [blood_id, request_id])
     ]);
 
     return {
