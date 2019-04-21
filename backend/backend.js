@@ -429,6 +429,44 @@ api.donor.request.accept = async function (req, res) {
 };
 handlers.push({path: '/donor/request/accept', handler: api.donor.request.accept});
 
+// Requester //////////////////////////////////////////////////////////////////
+
+api.requester.request = {};
+
+api.requester.request.new = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'REQUESTER') {
+        return {
+            ok: false,
+            error: 'Only requester can request.'
+        };
+    }
+
+    var info = await sql('select blood_type from user_info where user_id = ?', [s.id]);
+    if (info.length != 1) throw "info.len != 1";
+    var bt = info[0].blood_type;
+
+    await sql('insert into request SET ?', {
+        by_user: s.id, blood_type: bt, accepted: 0, time: Math.floor((new Date).getTime()/1000)
+    });
+
+    return {
+        ok: true
+    };
+};
+handlers.push({path: '/requester/request/new', handler: api.requester.request.new});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
