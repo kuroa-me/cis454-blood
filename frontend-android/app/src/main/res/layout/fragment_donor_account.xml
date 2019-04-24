@@ -27,7 +27,7 @@
         android:layout_marginBottom="427dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/upload"
+        android:text="@string/update"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
         android:layout_marginBottom="141dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/request_status"
+        android:text="@string/view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
