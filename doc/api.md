@@ -356,11 +356,7 @@ user_id: uint,
 username: string,
 password: string,
 first_name: string,
-last_name: string,
-blood_type: int,
-age: uint,
-sex: string,
-height: uint
+last_name: string
 ```
 
 returns: 
