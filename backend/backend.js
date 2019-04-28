@@ -776,6 +776,43 @@ api.admin.bloodtype.add = async function (req, res) {
 };
 handlers.push({path: '/admin/bloodtype/add', handler: api.admin.bloodtype.add});
 
+api.admin.bloodtype.remove = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var type_id = req.body.type_id;
+
+    if (!type_id) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    await sql('delete from blood_type where id = ?', [type_id]);
+
+    return {
+        ok: true
+    };
+};
+handlers.push({path: '/admin/bloodtype/remove', handler: api.admin.bloodtype.remove});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
