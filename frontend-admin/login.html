@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src = api_caller.js></script>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <style>
+        #section {
+            height: auto;
+            text-align: center;
+            margin: 1em auto;
+            margin-top: 350px;
+        }
+
+        a{
+            text-decoration: none;
+            line-height: 38px;
+            color: #ccc;
+            margin: 2px;
+            padding: 2px;
+            border: 2px solid #333;
+            background-color: #333;
+        }
+        a:hover {
+            background-color: #666;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id = "section">
+        <h2>Please login account</h2>
+        <div>
+            <div id = errmsg></div>
+            Email Address:<input id="email" type="text" value=""></br></br>
+            Password: <input id="password" type="password" value=""></br>
+            <a id="login_button">Login</a>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.getElementById('login_button').onclick = function () { 
+        var usr = document.getElementById('email');
+        var pw = document.getElementById('password');
+        var api = new APICaller('http://127.0.0.1:8080/');
+        api('auth', {email: usr.value, password: pw.value}, function(returned) {
+            if(returned.ok == true) {
+                localStorage.token = returned.token;
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById("errmsg").innerText = 'incorrect username or password. Please try again.'
+            }
+        });
+    }
+</script>
+</html>
