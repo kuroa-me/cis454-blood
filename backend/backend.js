@@ -274,7 +274,7 @@ api.donor.get_donates = async function(req, res) {
         };
     }
 
-    var donate_history = await sql('select from_id, blood_type, date_received, to_id, avaliable, date_used from blood where from_id = ?', [s.id]);
+    var donate_history = await sql('select * from blood where from_id = ?', [s.id]);
 
     var history = donate_history.map(hist => {
         return {
@@ -283,7 +283,8 @@ api.donor.get_donates = async function(req, res) {
             date_received: hist.date_received,
             used: !hist.avaliable,
             date_used: hist.date_used,
-            to_id: hist.to_id
+            used_by: hist.to_id,
+            id: hist.id
         };
     });
 
@@ -523,6 +524,45 @@ api.requester.request.list = async function (req, res) {
     };
 };
 handlers.push({path: '/requester/request/list', handler: api.requester.request.list});
+
+// Administrators /////////////////////////////////////////////////////////////
+
+api.admin.blood = {};
+
+api.admin.blood.list = async function (req, res) {
+    var s = session.get(req.body.token);
+
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var hists = await sql('select * from blood');
+
+    var history = hists.map(hist => {
+        return {
+            donor_id: hist.from_id,
+            blood_type: hist.blood_type,
+            date_received: hist.date_received,
+            used: !hist.avaliable,
+            date_used: hist.date_used,
+            used_by: hist.to_id,
+            id: hist.id
+        };
+    });
+
+    return {
+        ok: true,
+        bloods: history
+    };
+};
+handlers.push({path: '/admin/blood/list', handler: api.admin.blood.list});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
