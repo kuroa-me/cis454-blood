@@ -599,6 +599,51 @@ api.admin.user.remove = async function (req, res) {
 };
 handlers.push({path: '/admin/user/remove', handler: api.admin.user.remove});
 
+api.admin.user.edit = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var { user_id, username, password, first_name, last_name } = req.body;
+
+    var query = '', vars = [];
+
+    if (!username || !first_name || !last_name || !user_id) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    if (!password || password == '') {
+        query = 'update user SET username = ?, first_name = ?, last_name = ? where id = ?';
+        vars = [username, first_name, last_name, user_id];
+    } else {
+        query = 'update user SET username = ?, first_name = ?, last_name = ?, password = MD5(?) where id = ?';
+        vars = [username, first_name, last_name, password, user_id];
+    }
+
+    await sql(query, vars);
+
+    return {ok: true};
+};
+handlers.push({path: '/admin/user/edit', handler: api.admin.user.edit});
+
 api.admin.blood = {};
 
 api.admin.blood.list = async function (req, res) {
