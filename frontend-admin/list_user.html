@@ -38,7 +38,7 @@
     <script>
     document.getElementById('login_button').onclick = function () { 
         var api = new APICaller(base_url);
-        api('auth', {token:localStorage.token}, function(returned) {
+        api('list', {token:localStorage.token}, function(returned) {
             if(returned.ok == true) {
                 var users = returned.user;
                 users.forEach(function(user){
