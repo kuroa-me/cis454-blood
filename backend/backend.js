@@ -837,7 +837,7 @@ api.admin.bloodtype.edit = async function (req, res) {
     
     await sql('update blood_type SET type_name = ? where id = ?', [blood_type, type_id]);
 
-    return {
+    return {    
         ok: true
     };
 };
@@ -914,12 +914,15 @@ const root_handler = async function (req, res) {
     
     try {
         var body = await body_fetch(req);
+        console.log("got:", body);
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(await find_handler(url.pathname)({
+        var reply = await find_handler(url.pathname)({
             path: url.pathname, 
             query: url.query, 
             method, headers, body
-        }, res)));
+        }, res);
+        console.log("reply:", reply);
+        res.end(JSON.stringify(reply));
     } catch (e) {
         console.log('Error Handling Request: ', e);
         res.end(JSON.stringify({
