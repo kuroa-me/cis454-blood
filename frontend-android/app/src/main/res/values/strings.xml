@@ -14,6 +14,8 @@
     <string name="phone">Phone Number</string>
     <string name="signout">Sign Out</string>
     <string name="confirm">Confirm</string>
+    <string name="donor">Donor</string>
+    <string name="requester">Requester</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
