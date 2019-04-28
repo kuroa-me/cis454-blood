@@ -78,7 +78,7 @@ public class APICaller {
     }
 
     });*/
-    void miscGetBloodTypes (RequestCallback cb) throws JSONException{
+    void miscGetBloodTypes (RequestCallback cb) {
         JSONObject getBloodTypes = new JSONObject();
         jsonRequest("misc/getbloodtypes", getBloodTypes, cb);
     }

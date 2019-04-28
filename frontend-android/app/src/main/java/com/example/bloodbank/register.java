@@ -1,14 +1,25 @@
 package com.example.bloodbank;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -19,7 +30,7 @@ import android.view.ViewGroup;
  * Use the {@link register#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class register extends Fragment {
+public class register extends Fragment implements RequestCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +41,7 @@ public class register extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    JSONArray bloodTypes;
 
     public register() {
         // Required empty public constructor
@@ -56,10 +68,34 @@ public class register extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        APICaller a = new APICaller("http://nj.kuroa.me:8080/", getActivity().getBaseContext());
+        a.miscGetBloodTypes(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        final Button button = getActivity().findViewById(R.id.button);
+        try {
+            String username = ((EditText) getView().findViewById(R.id.register_username)).getText().toString();
+            String password = ((EditText) getView().findViewById(R.id.register_password)).getText().toString();
+            String firstName = ((EditText) getView().findViewById(R.id.register_firstname)).getText().toString();
+            String lastName = ((EditText) getView().findViewById(R.id.register_lastname)).getText().toString();
+            String mBloodType = ((EditText) getView().findViewById(R.id.register_bloodtype)).getText().toString();
+            int bloodTypeId = -1;
+            int age = Integer.parseInt(((EditText) getView().findViewById(R.id.register_bloodtype)).getText().toString());
+            String sex = ((EditText) getView().findViewById(R.id.register_sex)).getText().toString();
+            int height = Integer.parseInt(((EditText) getView().findViewById(R.id.register_height)).getText().toString());
+            for (int i = 0; i < bloodTypes.length(); i++) {
+                JSONObject bt = bloodTypes.getJSONObject(i);
+                if (bt.getString("types").equals(mBloodType)) {
+                    bloodTypeId = bt.getInt("id");
+                }
+            }
+            button.setOnClickListener(new LoginButtonClickListener(username, password, firstName, lastName, true, bloodTypeId, age, sex, height, getActivity()));
+        } catch(Exception e){
+
+        }
+
     }
 
     @Override
@@ -74,6 +110,31 @@ public class register extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+
+    }
+
+    @Override
+    public void process(JSONObject obj) {
+            try {
+                Log.d("shi", "processssssssssssssssssssssssssssssssss");
+
+                Boolean ok = obj.getBoolean("ok");
+                if (ok) {
+                    Log.d("misc", "OK");
+                        bloodTypes = obj.getJSONArray("types");
+                } else {
+                    Log.d("misc", "not ok");
+                    Context context = getActivity();
+                    String error = obj.getString("error");
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(context).setMessage(error);
+                    AlertDialog alertDialog = dialog.show();
+                }
+            } catch (Exception e) {
+                Log.d("procerr", e.toString());
+                Context context = getActivity();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context).setMessage(e.toString());
+                AlertDialog alertDialog = dialog.show();
+            }
     }
 
     @Override
@@ -107,4 +168,7 @@ public class register extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }
