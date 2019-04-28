@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    </head>
+    <body >
+     <h1 align="center">Donation History </h1>
+
+    <div class="container">
+    <div class="page-header clearfix">
+        <div class="btn-toolbar">
+            <a href="login.html" class="btn btn-danger pull-right">Logout</a>
+            <a href="index.html" class="btn btn-success pull-right">Back To Main Page</a>
+        </div>
+    </div>
+
+     <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark/">
+          <tr>
+            <th>Blood Type</th>
+            <th>Donor</th>
+            <th>Donation Date</th>
+            <th>Status</th>
+            <th>Used By</th>
+            <th>Date Being Used</th>
+            <th>Remove</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($result as $row) {?>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a  class="btn btn-success"> Remove</a></td>
+            <td><a href="history_edit.html" class="btn btn-success"> Edit</a></td>
+
+          </tr>
+        <?php }?>
+        </tbody>
+      </table>
+
+
+
+
+        
+    </body>
+</html>
