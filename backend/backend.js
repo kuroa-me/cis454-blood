@@ -724,6 +724,58 @@ api.admin.blood.remove = async function (req, res) {
 };
 handlers.push({path: '/admin/blood/remove', handler: api.admin.blood.remove});
 
+api.admin.bloodtype = {};
+
+api.admin.bloodtype.add = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var type_name = req.body.blood_type;
+
+    if (!type_name) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    var bid = await sql('select id from blood_type where type_name = ?', [type_name]);
+
+    if (bid.length != 0) {
+        return {
+            ok: false,
+            error: 'Type already exist.'
+        };
+    }
+
+    await sql('insert into blood_type SET ?', {type_name});
+    bid = await sql('select id from blood_type where type_name = ?', [type_name]);
+
+    if (bid.length != 1) throw "bid.length != 1 after insert.";
+
+    return {
+        ok: true,
+        type_id: bid[0].id
+    };
+};
+handlers.push({path: '/admin/bloodtype/add', handler: api.admin.bloodtype.add});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
