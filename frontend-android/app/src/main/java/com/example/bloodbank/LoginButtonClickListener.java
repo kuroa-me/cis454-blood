@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LoginButtonClickListener implements View.OnClickListener, RequestCallback {
-    JSONObject reg = new JSONObject();
+    //JSONObject reg = new JSONObject();
     JSONArray bloodTypes;
     Context ctx;
     View mParentView;
@@ -104,6 +104,7 @@ public class LoginButtonClickListener implements View.OnClickListener, RequestCa
                     String token = obj.getString("token");
                     SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank", Context.MODE_PRIVATE);
                     prefs.edit().putString("token", token).apply();
+
                 } else {
                     Log.d("misc", "invslid res");
                 }

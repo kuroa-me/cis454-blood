@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * Use the {@link register#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class register extends Fragment implements RequestCallback {
+public class register extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,7 +42,7 @@ public class register extends Fragment implements RequestCallback {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    JSONArray bloodTypes;
+    //JSONArray bloodTypes;
 
     Context mCtx;
 
@@ -104,7 +104,7 @@ public class register extends Fragment implements RequestCallback {
 
     }
 
-    @Override
+    /*@Override
     public void process(JSONObject obj) {
             try {
                 Log.d("shi", "processssssssssssssssssssssssssssssssss");
@@ -126,7 +126,7 @@ public class register extends Fragment implements RequestCallback {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context).setMessage(e.toString());
                 AlertDialog alertDialog = dialog.show();
             }
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
