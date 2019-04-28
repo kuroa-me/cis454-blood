@@ -38,7 +38,7 @@ timestamp: unsigned integer.
 donate_history: {donor_id: uint, blood_type: uint, date_received: timestamp, used: bool, ?date_used: timestamp, ?used_by: string}.
 blood_request: {id: uint, requester_name: string, requester_age: string, requester_sex: string}
 blood_request_status: {id: uint, date_requested: timestamp, accepted: bool, ?date_accepted: timestamp}
-blood_type: {id: uint, type: string}
+blood_type: {id: uint, type_name: string}
 user: {id: uint, username: string, fname: string, lname: string, type: string}
 ```
 
