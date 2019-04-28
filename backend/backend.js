@@ -274,10 +274,12 @@ api.donor.get_donates = async function(req, res) {
         };
     }
 
-    var donate_history = await sql('select date_received, to_id, avaliable, date_used from blood where from_id = ?', [s.id]);
+    var donate_history = await sql('select from_id, blood_type, date_received, to_id, avaliable, date_used from blood where from_id = ?', [s.id]);
 
     var history = donate_history.map(hist => {
         return {
+            donor_id: hist.from_id,
+            blood_type: hist.blood_type,
             date_received: hist.date_received,
             used: !hist.avaliable,
             date_used: hist.date_used,
