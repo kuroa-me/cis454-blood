@@ -419,7 +419,7 @@ api.donor.request.accept = async function (req, res) {
     var blood_id = bloods[0].id;
 
     await Promise.all([
-        sql('update blood SET avaliable = 0, to_id = ? where id = ?', [request[0].by_user, blood_id]),
+        sql('update blood SET avaliable = 0, to_id = ?, date_used = ? where id = ?', [request[0].by_user, Math.floor((new Date).getTime()/1000), blood_id]),
         sql('update request SET accepted = 1, blood_id = ? where id = ?', [blood_id, request_id])
     ]);
 
@@ -466,6 +466,61 @@ api.requester.request.new = async function (req, res) {
     };
 };
 handlers.push({path: '/requester/request/new', handler: api.requester.request.new});
+
+api.requester.request.list = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'REQUESTER') {
+        return {
+            ok: false,
+            error: 'Only requester can do this.'
+        };
+    }
+
+    var hists = await sql('select id, time, accepted, blood_id from request where by_user = ?', [s.id]);
+
+    if (hists.length == 0) {
+        return {
+            ok: true,
+            requests: []
+        };
+    }
+
+    var respond = [];
+    for (var i = 0; i < hists.length; i++) {
+        var hist = hists[i];
+        var date_accepted = null;
+        if (hist.accepted) {
+            var bloods = await sql ('select date_used from blood where id = ?', hist.blood_id);
+            if (bloods.length != 1) throw "bloods.length != 1";
+            var blood = bloods[0];
+            date_accepted = blood.date_used;
+        }
+        
+        respond.push({
+            id: hist.id,
+            date_requested: hist.time,
+            accepted: hist.accepted,
+            date_accepted: date_accepted
+        });
+    }
+
+    return {
+        ok: true,
+        requests: respond
+    };
+};
+handlers.push({path: '/requester/request/list', handler: api.requester.request.list});
 
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
