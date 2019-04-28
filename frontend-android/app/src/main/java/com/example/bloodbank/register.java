@@ -1,5 +1,6 @@
 package com.example.bloodbank;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -43,6 +44,8 @@ public class register extends Fragment implements RequestCallback {
     private OnFragmentInteractionListener mListener;
     JSONArray bloodTypes;
 
+    Context mCtx;
+
     public register() {
         // Required empty public constructor
     }
@@ -68,33 +71,7 @@ public class register extends Fragment implements RequestCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        APICaller a = new APICaller("http://nj.kuroa.me:8080/", getActivity().getBaseContext());
-        a.miscGetBloodTypes(this);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        final Button button = getActivity().findViewById(R.id.button);
-        try {
-            String username = ((EditText) getView().findViewById(R.id.register_username)).getText().toString();
-            String password = ((EditText) getView().findViewById(R.id.register_password)).getText().toString();
-            String firstName = ((EditText) getView().findViewById(R.id.register_firstname)).getText().toString();
-            String lastName = ((EditText) getView().findViewById(R.id.register_lastname)).getText().toString();
-            String mBloodType = ((EditText) getView().findViewById(R.id.register_bloodtype)).getText().toString();
-            int bloodTypeId = -1;
-            int age = Integer.parseInt(((EditText) getView().findViewById(R.id.register_bloodtype)).getText().toString());
-            String sex = ((EditText) getView().findViewById(R.id.register_sex)).getText().toString();
-            int height = Integer.parseInt(((EditText) getView().findViewById(R.id.register_height)).getText().toString());
-            for (int i = 0; i < bloodTypes.length(); i++) {
-                JSONObject bt = bloodTypes.getJSONObject(i);
-                if (bt.getString("types").equals(mBloodType)) {
-                    bloodTypeId = bt.getInt("id");
-                }
-            }
-            button.setOnClickListener(new LoginButtonClickListener(username, password, firstName, lastName, true, bloodTypeId, age, sex, height, getActivity()));
-        } catch(Exception e){
 
-        }
 
     }
 
@@ -102,7 +79,21 @@ public class register extends Fragment implements RequestCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_register, container, false);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        Button button = v.findViewById(R.id.button);//getActivity().findViewById(R.id.button);
+        try {
+            //Log.d("regfrag", "setbtn onclick");
+            button.setOnClickListener(new LoginButtonClickListener(mCtx, v));
+        } catch(Exception e){
+            Log.d("regfrag", e.toString());
+        }
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -139,6 +130,7 @@ public class register extends Fragment implements RequestCallback {
 
     @Override
     public void onAttach(Context context) {
+        Log.d("regfrag", "attach");
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -146,6 +138,7 @@ public class register extends Fragment implements RequestCallback {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override

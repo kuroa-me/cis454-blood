@@ -164,9 +164,10 @@
                     android:inputType="textPersonName" />
 
                 <RadioGroup
+                    android:id="@+id/radio_group"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="match_parent"
+                    >
                     <RadioButton
                         android:id="@+id/donor_button"
                         android:layout_width="wrap_content"
