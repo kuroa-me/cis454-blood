@@ -36,22 +36,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="217dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/username" />
-
-                <EditText
-                    android:id="@+id/register_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
-
-                <TextView
                     android:id="@+id/textView14"
                     android:layout_width="217dp"
                     android:layout_height="wrap_content"
