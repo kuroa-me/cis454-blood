@@ -915,7 +915,7 @@ const root_handler = async function (req, res) {
     try {
         var body = await body_fetch(req);
         console.log("got:", body);
-        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
         var reply = await find_handler(url.pathname)({
             path: url.pathname, 
             query: url.query, 
