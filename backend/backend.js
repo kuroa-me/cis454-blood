@@ -885,7 +885,7 @@ const find_handler = function(path) {
 
 const body_fetch = function (req) {
     var headers = req.headers;
-
+    
     return new Promise((reslove, reject) => {
         if (req.method != 'POST') {
             reject("unsupported HTTP method.");
@@ -912,6 +912,13 @@ const root_handler = async function (req, res) {
     var method = req.method;
     var headers = req.headers;
     
+    if (req.method == 'OPTIONS') {
+        console.log("got HTTP OPTIONS, replying.");
+        res.writeHead(204, {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type', 'Allow': 'POST'});
+        res.end();
+        return;
+    }
+
     try {
         var body = await body_fetch(req);
         console.log("got:", body);
