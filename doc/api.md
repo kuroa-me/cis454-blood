@@ -356,7 +356,8 @@ user_id: uint,
 username: string,
 password: string,
 first_name: string,
-last_name: string
+last_name: string,
+user_type: string
 ```
 
 returns: 
