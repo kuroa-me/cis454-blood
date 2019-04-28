@@ -62,7 +62,7 @@
 
                 <br> </br>
                 <div class="form-group">
-                    <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+                    <input type="submit" id="submit" class="btn btn-primary" value="Submit">
                 </div>
             </form>
         </div>
@@ -70,4 +70,30 @@
 </div>
 
   </body>
+
+  <script>
+    if(!localStorage.token){
+        window.location.href = 'login.html';
+    }
+    document.getElementById('submit').onclick = function () { 
+        var id = Number.parseInt(window.location.hash.replace('#', ''));
+        var username = document.getElementById('username');
+        var password = document.getElementById('password');
+        var first_name = document.getElementById('first_name');
+        var last_name = document.getElementById('last_name');
+        var blood_type = document.getElementById('blood_type');
+        var age = document.getElementById('age');
+        var sex = document.getElementById('sex');
+        var height = document.getElementById('height');
+        var api = new APICaller(base_url);
+        api('admin/user/edit', {token: localStorage.token, username: usrname.value, password: password.value, first_name:first_name.value, last_name: last_name.value, blood_type: blood_type.value, age: age.value, sex: sex.value, height: height.value }, function(returned) {
+            if(returned.ok == true) {
+                alert("Successfully edit the user");
+                window.location.href = 'list_user.html';
+            } else {
+                alert(returned.error);
+            }
+        });
+    }
+</script>
 </html>

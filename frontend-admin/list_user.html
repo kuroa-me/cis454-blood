@@ -11,7 +11,7 @@
     <div class="container">
     <div class="page-header clearfix">
         <div class="btn-toolbar">
-            <a href="login.html" class="btn btn-danger pull-right">Logout</a>
+            <a href="login.html" onclick= "window.localStorage.token = null" class="btn btn-danger pull-right">Logout</a>
             <a href="index.html" class="btn btn-success pull-right">Back To Main Page</a>
         </div>
     </div>
@@ -29,16 +29,18 @@
           </tr>
         </thead>
         <tbody id = "user_list">
-            <div id = errmsg></div>
           
         </tbody>
       </table>
 
     </body>
     <script>
-    document.getElementById('login_button').onclick = function () { 
+   
+      	if(!localStorage.token){
+        	window.location.href = 'login.html';
+    	}
         var api = new APICaller(base_url);
-        api('list', {token:localStorage.token}, function(returned) {
+        api('admin/user/list', {token:localStorage.token}, function(returned) {
             if(returned.ok == true) {
                 var users = returned.user;
                 users.forEach(function(user){
@@ -51,13 +53,13 @@
                     var td_type = document.createElement("td");
                     var td_remove = document.createElement("td");
                     var td_edit = document.createElement("td");
-                    td_id.innerText = book.title;
-                    td_username.innerText = book.author;
-                    td_fname.innerText = book.isbn;
-                    td_lname.innerText = "$" + (book.price/100);
-                    td_type.innerText = book.class_code;
-                    td_remove.innerHTML = "<a class="btn btn-success" >Remove</a>"
-                    td_edit.innerHTML = "<a href="edit_user.html" class="btn btn-success">Edit</a>"
+                    td_id.innerText = user.id;
+                    td_username.innerText = user.username;
+                    td_fname.innerText = user.fname;
+                    td_lname.innerText = user.lname;
+                    td_type.innerText = user.type;
+                    td_remove.innerHTML = "<a onclick= 'removeUser(" + user.id + ")' class="btn btn-success" >Remove</a>"
+                    td_edit.innerHTML = "<a href='buy.html#" + user.id + "' class="btn btn-success">Edit</a>"
                     tr.appendChild(td_id);
                     tr.appendChild(td_username);
                     tr.appendChild(td_fname);
@@ -69,9 +71,20 @@
 
                 })
             } else {
-                document.getElementById("errmsg").innerText = returned.error;
+                alert(returned.error);
             }
         });
-    }
+
+        function removeUser(user_id){
+        	api('admin/user/remove', {token:localStorage.token, user_id:user_id}, function(returned) {
+        		if(returned.ok == true) {
+                	alert("Successfully remove the user");
+                }
+             	else {
+                	alert(returned.error);
+            	}
+            });
+        }
+
     </script>
 </html>

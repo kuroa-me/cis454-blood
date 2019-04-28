@@ -41,11 +41,12 @@
 </body>
 
 <script>
+    
     document.getElementById('login_button').onclick = function () { 
         var usr = document.getElementById('username');
         var pw = document.getElementById('password');
         var api = new APICaller(base_url);
-        api('auth', {username: usr.value, password: pw.value}, function(returned) {
+        api('user/auth', {username: usr.value, password: pw.value}, function(returned) {
             if(returned.ok == true) {
                 localStorage.token = returned.token;
                 window.location.href = 'index.html';
