@@ -619,11 +619,11 @@ api.admin.user.edit = async function (req, res) {
         };
     }
 
-    var { user_id, username, password, first_name, last_name } = req.body;
+    var { user_id, username, password, first_name, last_name, user_type } = req.body;
 
     var query = '', vars = [];
 
-    if (!username || !first_name || !last_name || !user_id) {
+    if (!username || !first_name || !last_name || !user_id || !user_type) {
         return {
             ok: false,
             error: 'Missing info.'
@@ -631,11 +631,11 @@ api.admin.user.edit = async function (req, res) {
     }
 
     if (!password || password == '') {
-        query = 'update user SET username = ?, first_name = ?, last_name = ? where id = ?';
-        vars = [username, first_name, last_name, user_id];
+        query = 'update user SET type = ?, username = ?, first_name = ?, last_name = ? where id = ?';
+        vars = [user_type, username, first_name, last_name, user_id];
     } else {
-        query = 'update user SET username = ?, first_name = ?, last_name = ?, password = MD5(?) where id = ?';
-        vars = [username, first_name, last_name, password, user_id];
+        query = 'update user SET type = ?, username = ?, first_name = ?, last_name = ?, password = MD5(?) where id = ?';
+        vars = [user_type, username, first_name, last_name, password, user_id];
     }
 
     await sql(query, vars);
