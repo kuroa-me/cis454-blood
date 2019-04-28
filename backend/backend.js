@@ -527,6 +527,78 @@ handlers.push({path: '/requester/request/list', handler: api.requester.request.l
 
 // Administrators /////////////////////////////////////////////////////////////
 
+api.admin.user = {};
+
+api.admin.user.list = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var users = await sql('select type, username, first_name, last_name, id from user');
+
+    return {
+        ok: true,
+        users
+    };
+}
+handlers.push({path: '/admin/user/list', handler: api.admin.user.list});
+
+api.admin.user.remove = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var uid = req.body.user_id;
+
+    if (!uid) {
+        return {
+            ok: false,
+            error: 'Missing info.'
+        };
+    }
+
+    await Promise.all([
+        sql('delete from user where id = ?', uid),
+        sql('delete from user_info where user_id = ?', uid),
+        sql('delete from blood where from_id = ?', uid)
+    ]);
+
+    return {
+        ok: true
+    };
+};
+handlers.push({path: '/admin/user/remove', handler: api.admin.user.remove});
+
 api.admin.blood = {};
 
 api.admin.blood.list = async function (req, res) {
