@@ -32,7 +32,16 @@ public class MainActivity extends AppCompatActivity
         register.OnFragmentInteractionListener,
         login.OnFragmentInteractionListener,
         donor_dash.OnFragmentInteractionListener,
-        donor_upinfo.OnFragmentInteractionListener{
+        donor_upinfo.OnFragmentInteractionListener,
+        donor_history.OnFragmentInteractionListener,
+        donor_vreq.OnFragmentInteractionListener,
+        donor_donate.OnFragmentInteractionListener,
+        reque_dash.OnFragmentInteractionListener,
+        reque_history.OnFragmentInteractionListener,
+        reque_mreq.OnFragmentInteractionListener,
+        reque_upinfo.OnFragmentInteractionListener,
+        reque_check.OnFragmentInteractionListener
+{
 
     private DrawerLayout drawerLayout;
     private NavController navController;

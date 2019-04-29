@@ -117,6 +117,14 @@
             <action
                 android:id="@+id/action_des_reque_dash_to_des_reque_upinfo"
                 app:destination="@id/des_reque_upinfo" />
+            <action
+                android:id="@+id/action_des_reque_dash_to_des_reque_check"
+                app:destination="@id/des_reque_check" />
         </fragment>
+        <fragment
+            android:id="@+id/des_reque_check"
+            android:name="com.example.bloodbank.reque_check"
+            android:label="fragment_reque_check"
+            tools:layout="@layout/fragment_reque_check" />
     </navigation>
 </navigation>
