@@ -40,7 +40,6 @@ public class RegisterButtonClickListener implements View.OnClickListener, Reques
             reg.put("sex", sex);
             reg.put("height", height);
         } catch (Exception e) {
-
         }*/
         ctx = c;
     }
