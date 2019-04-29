@@ -76,7 +76,7 @@ public class DonorInfoUpdateClickListener implements RequestCallback, View.OnCli
                 }else {
                     Toast.makeText(ctx,"Updated",Toast.LENGTH_SHORT).show();
                     NavController navController = Navigation.findNavController(mParentView);
-                    //navController.navigate(R.id.action_des_update_to_donor_dash);
+                    navController.navigate(R.id.action_des_donor_upinfo_to_des_donor_dash);
                 }
             } else {
                 Log.d("misc", "not ok");
