@@ -59,9 +59,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.des_donor_dash, R.id.des_reque_dash, R.id.des_select)
+                .setDrawerLayout(drawerLayout)
+                .build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        NavigationUI.setupWithNavController(navigationView,navController);
+        //NavigationUI.setupWithNavController(navigationView,navController);
+        NavigationUI.setupWithNavController(toolbar,navController, appBarConfiguration);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,20 +77,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-/*
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
-                .setDrawerLayout(drawerLayout)
-                .build();
-*/
-    }
 
+    }
+/*
     @Override
     public boolean onSupportNavigateUp() {
         // Allows NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation.
         return NavigationUI.navigateUp(navController, drawerLayout);
 
-    }
+    }*/
 
     @Override
     public void onFragmentInteraction(Uri uri){}
