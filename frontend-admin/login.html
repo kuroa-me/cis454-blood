@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src = api_caller.js></script>
+    <script src = apicaller.js></script>
+    <script src = base_url.js></script>
     <meta charset="UTF-8">
     <title>Admin Login</title>
     <style>
@@ -32,26 +33,27 @@
         <h2>Please login account</h2>
         <div>
             <div id = errmsg></div>
-            Username: <input id="email" type="text" value=""></br></br>
+            Username: <input id="username" type="text" value=""></br></br>
             Password: <input id="password" type="password" value=""></br>
             <a id="login_button">Login</a>
         </div>
     </div>
 </body>
 
-<!--<script>
+<script>
+    
     document.getElementById('login_button').onclick = function () { 
-        var usr = document.getElementById('email');
+        var usr = document.getElementById('username');
         var pw = document.getElementById('password');
-        var api = new APICaller('http://127.0.0.1:8080/');
-        api('auth', {email: usr.value, password: pw.value}, function(returned) {
+        var api = new APICaller(base_url);
+        api('user/auth', {username: usr.value, password: pw.value}, function(returned) {
             if(returned.ok == true) {
                 localStorage.token = returned.token;
                 window.location.href = 'index.html';
             } else {
-                document.getElementById("errmsg").innerText = 'incorrect username or password. Please try again.'
+                document.getElementById("errmsg").innerText = returned.error;
             }
         });
     }
-</script>-->
+</script>
 </html>

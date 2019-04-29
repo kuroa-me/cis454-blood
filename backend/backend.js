@@ -619,11 +619,11 @@ api.admin.user.edit = async function (req, res) {
         };
     }
 
-    var { user_id, username, password, first_name, last_name } = req.body;
+    var { user_id, username, password, first_name, last_name, user_type } = req.body;
 
     var query = '', vars = [];
 
-    if (!username || !first_name || !last_name || !user_id) {
+    if (!username || !first_name || !last_name || !user_id || !user_type) {
         return {
             ok: false,
             error: 'Missing info.'
@@ -631,11 +631,11 @@ api.admin.user.edit = async function (req, res) {
     }
 
     if (!password || password == '') {
-        query = 'update user SET username = ?, first_name = ?, last_name = ? where id = ?';
-        vars = [username, first_name, last_name, user_id];
+        query = 'update user SET type = ?, username = ?, first_name = ?, last_name = ? where id = ?';
+        vars = [user_type, username, first_name, last_name, user_id];
     } else {
-        query = 'update user SET username = ?, first_name = ?, last_name = ?, password = MD5(?) where id = ?';
-        vars = [username, first_name, last_name, password, user_id];
+        query = 'update user SET type = ?, username = ?, first_name = ?, last_name = ?, password = MD5(?) where id = ?';
+        vars = [user_type, username, first_name, last_name, password, user_id];
     }
 
     await sql(query, vars);
@@ -813,6 +813,36 @@ api.admin.bloodtype.remove = async function (req, res) {
 };
 handlers.push({path: '/admin/bloodtype/remove', handler: api.admin.bloodtype.remove});
 
+api.admin.bloodtype.edit = async function (req, res) {
+    var s = session.get(req.body.token);
+
+    if (!s) {
+        return {
+            ok: false,
+            error: 'Permission denied.'
+        };
+    }
+
+    var user = await sql('select type from user where id = ?', [s.id]);
+    if (user.length != 1) throw "user.len != 1";
+
+    if (user[0].type != 'ADMIN') {
+        return {
+            ok: false,
+            error: 'Only administrator can do this.'
+        };
+    }
+
+    var { type_id, blood_type } = req.body;
+    
+    await sql('update blood_type SET type_name = ? where id = ?', [blood_type, type_id]);
+
+    return {    
+        ok: true
+    };
+};
+handlers.push({path: '/admin/bloodtype/edit', handler: api.admin.bloodtype.edit});
+
 ///////////////////////////////////////////////////////////////////////////////
 // MySQL
 ///////////////////////////////////////////////////////////////////////////////
@@ -855,7 +885,7 @@ const find_handler = function(path) {
 
 const body_fetch = function (req) {
     var headers = req.headers;
-
+    
     return new Promise((reslove, reject) => {
         if (req.method != 'POST') {
             reject("unsupported HTTP method.");
@@ -882,14 +912,24 @@ const root_handler = async function (req, res) {
     var method = req.method;
     var headers = req.headers;
     
+    if (req.method == 'OPTIONS') {
+        console.log("got HTTP OPTIONS, replying.");
+        res.writeHead(204, {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type', 'Allow': 'POST'});
+        res.end();
+        return;
+    }
+
     try {
         var body = await body_fetch(req);
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(await find_handler(url.pathname)({
+        console.log("got:", body);
+        res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+        var reply = await find_handler(url.pathname)({
             path: url.pathname, 
             query: url.query, 
             method, headers, body
-        }, res)));
+        }, res);
+        console.log("reply:", reply);
+        res.end(JSON.stringify(reply));
     } catch (e) {
         console.log('Error Handling Request: ', e);
         res.end(JSON.stringify({

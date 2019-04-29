@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src = apicaller.js></script>
+        <script src = base_url.js></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     </head>
     <body >
@@ -9,7 +11,7 @@
     <div class="container">
     <div class="page-header clearfix">
         <div class="btn-toolbar">
-            <a href="login.html" class="btn btn-danger pull-right">Logout</a>
+            <a href="login.html" onclick= "window.localStorage.token = null" class="btn btn-danger pull-right">Logout</a>
             <a href="index.html" class="btn btn-success pull-right">Back To Main Page</a>
         </div>
     </div>
@@ -17,42 +19,73 @@
      <table class="table table-bordered table-striped table-hover">
         <thead class="thead-dark/">
           <tr>
+            <th>ID</th>
             <th>Username</th>
-            <th>Password</th>
-            <th>User Type</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Blood Type</th>
-            <th>Age</th>
-            <th>Sex</th>
-            <th>Height</th>
+            <th>User Type</th>
             <th>Remove</th>
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
-        <?php foreach ($result as $row) {?>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a  class="btn btn-success"> Remove</a></td>
-            <td><a href="edit_user.html" class="btn btn-success"> Edit</a></td>
-
-          </tr>
-        <?php }?>
+        <tbody id = "user_list">
+          
         </tbody>
       </table>
 
-
-
-
-        
     </body>
+    <script>
+   
+      	if(!localStorage.token){
+        	window.location.href = 'login.html';
+    	}
+        var api = new APICaller(base_url);
+        api('admin/user/list', {token:localStorage.token}, function(returned) {
+            if(returned.ok == true) {
+                var users = returned.users;
+                users.forEach(function(user){
+
+                    var tr = document.createElement("tr");
+                    var td_id = document.createElement("td");
+                    var td_username = document.createElement("td");
+                    var td_fname = document.createElement("td");
+                    var td_lname = document.createElement("td");
+                    var td_type = document.createElement("td");
+                    var td_remove = document.createElement("td");
+                    var td_edit = document.createElement("td");
+                    td_id.innerText = user.id;
+                    td_username.innerText = user.username;
+                    td_fname.innerText = user.first_name;
+                    td_lname.innerText = user.last_name;
+                    td_type.innerText = user.type;
+                    td_remove.innerHTML = "<a onclick= 'removeUser(" + user.id + ")' class=\"btn btn-success\" >Remove</a>"
+                    td_edit.innerHTML = "<a href='edit_user.html#" + user.id + "' class=\"btn btn-success\">Edit</a>"
+                    tr.appendChild(td_id);
+                    tr.appendChild(td_username);
+                    tr.appendChild(td_fname);
+                    tr.appendChild(td_lname);
+                    tr.appendChild(td_type);
+                    tr.appendChild(td_remove);
+                    tr.appendChild(td_edit);
+                    document.getElementById("user_list").appendChild(tr);
+
+                })
+            } else {
+                alert(returned.error);
+            }
+        });
+
+        function removeUser(user_id){
+        	api('admin/user/remove', {token:localStorage.token, user_id:user_id}, function(returned) {
+        		if(returned.ok == true) {
+                	alert("Successfully remove the user");
+                	location.reload();
+                }
+             	else {
+                	alert(returned.error);
+            	}
+            });
+        }
+
+    </script>
 </html>

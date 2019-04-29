@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src = apicaller.js></script>
+        <script src = base_url.js></script>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     </head>
@@ -40,29 +42,10 @@
                     <input  id="last_name" class="form-control" value="">
                 </div>
 
-                <div >
-                    <label>Blood Type</label>
-                    <input  id="blood_type" class="form-control" value="">
-                </div>
-
-                <div >
-                    <label>Age</label>
-                    <input  id="age" class="form-control" value="">
-                </div>
-
-                <div >
-                    <label>Sex</label>
-                    <input  id="sex" class="form-control" value="">
-                </div>
-
-                <div >
-                    <label>Height</label>
-                    <input  id="height" class="form-control" value="">
-                </div>
 
                 <br> </br>
                 <div class="form-group">
-                    <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+                    <button id="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -70,4 +53,27 @@
 </div>
 
   </body>
+
+  <script>
+    if(!localStorage.token){
+        window.location.href = 'login.html';
+    }
+    document.getElementById('submit').onclick = function () { 
+        var id = Number.parseInt(window.location.hash.replace('#', ''));
+        var username = document.getElementById('username');
+        var password = document.getElementById('password');
+        var first_name = document.getElementById('first_name');
+        var last_name = document.getElementById('last_name');
+        var user_type = document.getElementById('user_type');
+        var api = new APICaller(base_url);
+        api('admin/user/edit', {token: localStorage.token, user_id:id, username: username.value, password: password.value, first_name:first_name.value, last_name: last_name.value, user_type: user_type.value }, function(returned) {
+            if(returned.ok == true) {
+                alert("Successfully edit the user");
+                window.location.href = 'list_user.html';
+            } else {
+                alert(returned.error);
+            }
+        });
+    }
+</script>
 </html>
