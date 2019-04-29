@@ -20,8 +20,8 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_register_to_login"
-            app:destination="@id/des_log" />
+            android:id="@+id/action_des_reg_to_des_donor_dash"
+            app:destination="@id/des_donor_dash" />
     </fragment>
     <fragment
         android:id="@+id/des_select"

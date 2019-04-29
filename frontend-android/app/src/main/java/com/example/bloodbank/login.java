@@ -1,7 +1,6 @@
 package com.example.bloodbank;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -78,7 +77,7 @@ public class login extends Fragment {
         Button button = v.findViewById(R.id.des_log);
         try {
             Log.d("logfrag", "listen");
-            button.setOnClickListener(new RealLoginButtonClickListener(mCtx, v));
+            button.setOnClickListener(new LoginButtonClickListener(mCtx, v));
         } catch(Exception e){
             Log.d("logfrag", e.toString());
         }
@@ -89,9 +88,6 @@ public class login extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-
-        Button loginBtn = getView().findViewById(R.id.button2);
-        loginBtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_log_to_donor_dash, null));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
