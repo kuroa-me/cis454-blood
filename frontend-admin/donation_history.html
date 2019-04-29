@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src = apicaller.js></script>
+        <script src = base_url.js></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     </head>
     <body >
@@ -17,36 +19,75 @@
      <table class="table table-bordered table-striped table-hover">
         <thead class="thead-dark/">
           <tr>
+            <th>ID</th>
+            <th>Donor ID</th>
             <th>Blood Type</th>
-            <th>Donor</th>
             <th>Donation Date</th>
             <th>Status</th>
-            <th>Used By</th>
             <th>Date Being Used</th>
+            <th>Used By</th>
             <th>Remove</th>
-            <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
-        <?php foreach ($result as $row) {?>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a  class="btn btn-success"> Remove</a></td>
-            <td><a href="history_edit.html" class="btn btn-success"> Edit</a></td>
+        <tbody id="history_list">
 
-          </tr>
-        <?php }?>
         </tbody>
       </table>
-
-
-
-
         
     </body>
+    <script>
+   
+        if(!localStorage.token){
+            window.location.href = 'login.html';
+        }
+        var api = new APICaller(base_url);
+        api('admin/blood/list', {token:localStorage.token}, function(returned) {
+            if(returned.ok == true) {
+                var historys = returned.bloods;
+                historys.forEach(function(history){
+
+                    var tr = document.createElement("tr");
+                    var td_id = document.createElement("td");
+                    var td_donor_id = document.createElement("td");
+                    var td_blood_type = document.createElement("td");
+                    var td_date_received = document.createElement("td");
+                    var td_used = document.createElement("td");
+                    var td_date_used = document.createElement("td");
+                    var td_used_by = document.createElement("td");
+                    var td_remove = document.createElement("td");
+                    td_id.innerText = history.id;
+                    td_donor_id.innerText = history.donor_id;
+                    td_blood_type.innerText = history.blood_type;
+                    td_date_received.innerText = history.date_received;
+                    td_date_used.innerText = history.date_used;
+                    td_used_by.innerText = history.used_by;
+                    td_remove.innerHTML = "<a onclick= 'removeHistory(" + history.id + ")' class=\"btn btn-success\" >Remove</a>"
+                    tr.appendChild(td_id);
+                    tr.appendChild(td_donor_id);
+                    tr.appendChild(td_blood_type);
+                    tr.appendChild(td_date_received);
+                    tr.appendChild(td_date_used);
+                    tr.appendChild(td_used_by);
+                    tr.appendChild(td_remove);
+                    document.getElementById("history_list").appendChild(tr);
+
+                })
+            } else {
+                alert(returned.error);
+            }
+        });
+
+        function removeHistory(history_id){
+            api('admin/user/remove', {token:localStorage.token, blood_id:history_id}, function(returned) {
+                if(returned.ok == true) {
+                    alert("Successfully remove the history");
+                    location.reload();
+                }
+                else {
+                    alert(returned.error);
+                }
+            });
+        }
+
+    </script>
 </html>
