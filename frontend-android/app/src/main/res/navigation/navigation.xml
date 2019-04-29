@@ -32,7 +32,11 @@
         android:id="@+id/des_reque_mreq"
         android:name="com.example.bloodbank.reque_mreq"
         android:label="Confirm Request"
-        tools:layout="@layout/fragment_reque_mreq" />
+        tools:layout="@layout/fragment_reque_mreq" >
+        <action
+            android:id="@+id/action_des_reque_mreq_to_des_reque_dash"
+            app:destination="@id/des_reque_dash" />
+    </fragment>
     <fragment
         android:id="@+id/des_reque_upinfo"
         android:name="com.example.bloodbank.reque_upinfo"
@@ -79,7 +83,11 @@
         android:id="@+id/des_donor_donate"
         android:name="com.example.bloodbank.donor_donate"
         android:label="Confirm Donation"
-        tools:layout="@layout/fragment_donor_donate" />
+        tools:layout="@layout/fragment_donor_donate" >
+        <action
+            android:id="@+id/action_des_donor_donate_to_des_donor_dash"
+            app:destination="@id/des_donor_dash" />
+    </fragment>
     <fragment
         android:id="@+id/des_donor_upinfo"
         android:name="com.example.bloodbank.donor_upinfo"

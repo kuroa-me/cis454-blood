@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +29,7 @@ public class reque_mreq extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Context mCtx;
     private OnFragmentInteractionListener mListener;
 
     public reque_mreq() {
@@ -68,6 +70,18 @@ public class reque_mreq extends Fragment {
         return inflater.inflate(R.layout.fragment_reque_mreq, container, false);
     }
 
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        Button nobtn = view.findViewById(R.id.reque_mreq_n);
+        Button yesbtn = view.findViewById(R.id.reque_mreq_y);
+
+        nobtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_mreq_to_des_reque_dash, null));
+        yesbtn.setOnClickListener(new RequeMreqClickListener(mCtx, view));
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -84,6 +98,7 @@ public class reque_mreq extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override

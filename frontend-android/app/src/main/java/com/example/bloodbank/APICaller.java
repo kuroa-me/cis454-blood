@@ -154,85 +154,19 @@ public class APICaller {
         JSONObject requestAccept = new JSONObject();
         requestAccept.put("token", token);
         requestAccept.put("request_id", requestId);
-        jsonRequest("/donor/request/accpet", requestAccept, cb);
+        jsonRequest("donor/request/accpet", requestAccept, cb);
     }
 
     void requesterRequestNew(String token, RequestCallback cb) throws JSONException{
         JSONObject requestNew = new JSONObject();
         requestNew.put("token", token);
-        jsonRequest("/requester/request/new", requestNew, cb);
+        jsonRequest("requester/request/new", requestNew, cb);
     }
 
     void requesterRequestList(String token, RequestCallback cb) throws JSONException{
         JSONObject requestList = new JSONObject();
         requestList.put("token", token);
-        jsonRequest("/requester/request/list", requestList, cb);
-    }
-
-    void adminUserList(String token, RequestCallback cb) throws JSONException{
-        JSONObject userList = new JSONObject();
-        userList.put("token", token);
-        jsonRequest("/admin/user/list", userList, cb);
-    }
-
-    void adminUserRemove(String token, int userId, RequestCallback cb) throws JSONException{
-        JSONObject userRemove = new JSONObject();
-        userRemove.put("token", token);
-        userRemove.put("user_id", userId);
-        jsonRequest("/admin/user/remove", userRemove, cb);
-    }
-
-    void adminUserEdit(String token, int userId, String username, String password, String firstName,
-                       String lastName, int bloodType, int age, String sex, int height,
-                       RequestCallback cb) throws JSONException{
-        JSONObject userEdit = new JSONObject();
-        userEdit.put("token", token);
-        userEdit.put("user_id", userId);
-        userEdit.put("username", username);
-        userEdit.put("password", password);
-        userEdit.put("first_name", firstName);
-        userEdit.put("last_name",lastName);
-        userEdit.put("blood_type", bloodType);
-        userEdit.put("age", age);
-        userEdit.put("sex",sex);
-        userEdit.put("height",height);
-        jsonRequest("/admin/user/edit", userEdit, cb);
-    }
-
-    void adminBloodList(String token, RequestCallback cb) throws JSONException{
-        JSONObject bloodList = new JSONObject();
-        bloodList.put("token", token);
-        jsonRequest("/admin/blood/list", bloodList, cb);
-    }
-
-    void adminBloodRemove(String token, int blood_id, RequestCallback cb) throws JSONException{
-        JSONObject bloodRemove = new JSONObject();
-        bloodRemove.put("token", token);
-        bloodRemove.put("blood_id", blood_id);
-        jsonRequest("/admin/blood/remove", bloodRemove, cb);
-    }
-
-    void adminBloodtypeAdd(String token, String bloodType, RequestCallback cb) throws JSONException{
-        JSONObject bloodtypeAdd = new JSONObject();
-        bloodtypeAdd.put("token", token);
-        bloodtypeAdd.put("blood_type", bloodType);
-        jsonRequest("/admin/bloodtype/add", bloodtypeAdd, cb);
-    }
-
-    void adminBloodtypeRemove(String token, int typeId, RequestCallback cb) throws JSONException{
-        JSONObject bloodtypeRemove = new JSONObject();
-        bloodtypeRemove.put("token", token);
-        bloodtypeRemove.put("type_id", typeId);
-        jsonRequest("/admin/bloodtype/remove", bloodtypeRemove, cb);
-    }
-
-    void adminBloodtypeEdit(String token, int typeId, String bloodType, RequestCallback cb)
-            throws JSONException{
-        JSONObject bloodtypeEdit = new JSONObject();
-        bloodtypeEdit.put("token", token);
-        bloodtypeEdit.put("type_id", typeId);
-        bloodtypeEdit.put("blood_type", bloodType);
-        jsonRequest("/admin/bloodtype/edit", bloodtypeEdit, cb);
+        jsonRequest("requester/request/list", requestList, cb);
     }
 }
 

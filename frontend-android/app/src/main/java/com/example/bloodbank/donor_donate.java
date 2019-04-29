@@ -5,10 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +30,7 @@ public class donor_donate extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Context mCtx;
     private OnFragmentInteractionListener mListener;
 
     public donor_donate() {
@@ -68,6 +71,17 @@ public class donor_donate extends Fragment {
         return inflater.inflate(R.layout.fragment_donor_donate, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        Button nobtn = view.findViewById(R.id.donor_donate_n);
+        Button yesbtn = view.findViewById(R.id.donor_donate_y);
+        
+        nobtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_donor_donate_to_des_donor_dash, null));
+        yesbtn.setOnClickListener(new DonorDonateClickListener(mCtx, view));
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -84,6 +98,7 @@ public class donor_donate extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override
