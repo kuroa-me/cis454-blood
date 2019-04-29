@@ -11,100 +11,122 @@
         android:layout_height="match_parent">
 
 
-        <ImageButton
-            android:id="@+id/donor_upinfo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="68dp"
-            android:layout_marginTop="152dp"
-            android:layout_marginBottom="7dp"
-            app:layout_constraintBottom_toTopOf="@+id/editText2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/uploadinfor" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="162dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginBottom="427dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/update"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/donor_upinfo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/donor_history"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="152dp"
-            android:layout_marginEnd="68dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/view_donate_history" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="135dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/history"
-            app:layout_constraintBottom_toTopOf="@+id/donor_vreq"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/donor_history"
-            app:layout_constraintVertical_bias="0.008" />
+                    <ImageButton
+                        android:id="@+id/reque_upinfo"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="100dp"
+                        android:src="@drawable/uploadinfor" />
 
-        <ImageButton
-            android:id="@+id/donor_donate"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="68dp"
-            android:layout_marginBottom="197dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/donate" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_horizontal"
+                        android:text="@string/update"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="80dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="88dp"
-            android:layout_marginBottom="142dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/donate"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/donor_vreq"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginBottom="197dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/request_status" />
+                    <ImageButton
+                        android:id="@+id/reque_history"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="100dp"
+                        android:src="@drawable/view_donate_history" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="141dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="35dp"
-            android:layout_marginBottom="141dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/view"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_horizontal"
+                        android:text="@string/history"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/reque_mreq"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="100dp"
+                        android:src="@drawable/donate" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_horizontal"
+                        android:text="@string/donate"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/reque_vstatus"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="100dp"
+                        android:src="@drawable/request_status" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center_horizontal"
+                        android:text="@string/view"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
