@@ -39,7 +39,7 @@ public class LoginButtonClickListener implements RequestCallback, View.OnClickLi
             if (ok) {
                 Log.d("login", "ok");
                 String token = obj.getString("token");
-                SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank", Context.MODE_PRIVATE);
+                SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
                 prefs.edit().putString("token", token).apply();
                 Log.d("token", token);
                 NavController navController = Navigation.findNavController(mParentView);
