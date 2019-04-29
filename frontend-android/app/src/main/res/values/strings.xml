@@ -16,8 +16,12 @@
     <string name="confirm">Confirm</string>
     <string name="donor">Donor</string>
     <string name="requester">Requester</string>
-    <string name="donor_dash">Donor Dashboard</string>
-    <string name="donor_upinfo">Donor Upload Info</string>
+    <string name="dash">Dashboard</string>
+    <string name="upinfo">Upload Info</string>
+    <string name="mreq">Make Request</string>
+    <string name="vreq">View Request</string>
+    <string name="check">Status</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

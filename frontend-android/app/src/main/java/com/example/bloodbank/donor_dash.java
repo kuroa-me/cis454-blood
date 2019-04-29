@@ -8,9 +8,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class donor_dash extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -49,6 +53,8 @@ public class donor_dash extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setDrawer();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -56,6 +62,36 @@ public class donor_dash extends Fragment {
 
     }
 
+    private void setDrawer(){
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem nav_login  = menu.findItem(R.id.des_log);
+        nav_login.setVisible(false);
+        MenuItem nav_regis  = menu.findItem(R.id.des_reg);
+        nav_regis.setVisible(false);
+        MenuItem nav_select  = menu.findItem(R.id.des_select);
+        nav_select.setVisible(false);
+        MenuItem nav_reque_check  = menu.findItem(R.id.des_reque_check);
+        nav_reque_check.setVisible(false);
+        MenuItem nav_reque_dash  = menu.findItem(R.id.des_reque_dash);
+        nav_reque_dash.setVisible(false);
+        MenuItem nav_reque_history  = menu.findItem(R.id.des_reque_history);
+        nav_reque_history.setVisible(false);
+        MenuItem nav_reque_mreq  = menu.findItem(R.id.des_reque_mreq);
+        nav_reque_mreq.setVisible(false);
+        MenuItem nav_reque_upinfo  = menu.findItem(R.id.des_reque_upinfo);
+        nav_reque_upinfo.setVisible(false);
+        MenuItem nav_donor_dash  = menu.findItem(R.id.des_donor_dash);
+        nav_donor_dash.setVisible(true);
+        MenuItem nav_donor_donate  = menu.findItem(R.id.des_donor_donate);
+        nav_donor_donate.setVisible(true);
+        MenuItem nav_donor_history  = menu.findItem(R.id.des_donor_history);
+        nav_donor_history.setVisible(true);
+        MenuItem nav_donor_upinfo  = menu.findItem(R.id.des_donor_upinfo);
+        nav_donor_upinfo.setVisible(true);
+        MenuItem nav_donor_vreq  = menu.findItem(R.id.des_donor_vreq);
+        nav_donor_vreq.setVisible(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +99,9 @@ public class donor_dash extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_donor_dash, container, false);
+
+
+
         return v;
     }
 
