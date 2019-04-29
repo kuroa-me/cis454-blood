@@ -122,7 +122,7 @@ public class APICaller {
         update.put("age", age);
         update.put("sex", sex);
         update.put("height", height);
-        jsonRequest("usr/update", update, cb);
+        jsonRequest("user/update", update, cb);
     }
 
     void userLogout(String token, RequestCallback cb) throws JSONException{

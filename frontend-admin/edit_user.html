@@ -16,7 +16,7 @@
             <a href="login.html" class="btn btn-danger pull-right">Logout</a>
             <a href="list_user.html" class="btn btn-success pull-right">Back To List User Page</a>
             </div>
-            <form >
+
                 <div >
                     <label>Username</label>
                     <input  id="username" class="form-control" value="">
@@ -45,9 +45,8 @@
 
                 <br> </br>
                 <div class="form-group">
-                    <button id="submit" class="btn btn-primary">Submit</button>
+                    <button id="do" class="btn btn-primary">Submit</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
@@ -58,7 +57,7 @@
     if(!localStorage.token){
         window.location.href = 'login.html';
     }
-    document.getElementById('submit').onclick = function () { 
+    document.getElementById('do').onclick = function () { 
         var id = Number.parseInt(window.location.hash.replace('#', ''));
         var username = document.getElementById('username');
         var password = document.getElementById('password');

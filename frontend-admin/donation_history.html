@@ -23,7 +23,7 @@
             <th>Donor ID</th>
             <th>Blood Type</th>
             <th>Donation Date</th>
-            <th>Status</th>
+            <th>Used</th>
             <th>Date Being Used</th>
             <th>Used By</th>
             <th>Remove</th>
@@ -59,6 +59,7 @@
                     td_donor_id.innerText = history.donor_id;
                     td_blood_type.innerText = history.blood_type;
                     td_date_received.innerText = history.date_received;
+                    td_used.innerText = history.used;
                     td_date_used.innerText = history.date_used;
                     td_used_by.innerText = history.used_by;
                     td_remove.innerHTML = "<a onclick= 'removeHistory(" + history.id + ")' class=\"btn btn-success\" >Remove</a>"
@@ -66,6 +67,7 @@
                     tr.appendChild(td_donor_id);
                     tr.appendChild(td_blood_type);
                     tr.appendChild(td_date_received);
+                    tr.appendChild(td_used);
                     tr.appendChild(td_date_used);
                     tr.appendChild(td_used_by);
                     tr.appendChild(td_remove);
@@ -78,7 +80,7 @@
         });
 
         function removeHistory(history_id){
-            api('admin/user/remove', {token:localStorage.token, blood_id:history_id}, function(returned) {
+            api('admin/blood/remove', {token:localStorage.token, blood_id:history_id}, function(returned) {
                 if(returned.ok == true) {
                     alert("Successfully remove the history");
                     location.reload();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".donor_dash">
+    tools:context=".reque_dash">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_upinfo"
+                        android:id="@+id/reque_upinfo"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
@@ -54,7 +54,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_history"
+                        android:id="@+id/reque_history"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
@@ -85,12 +85,12 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_donate"
+                        android:id="@+id/reque_mreq"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="100dp"
-                        android:src="@drawable/donate" />
+                        android:src="@drawable/make_request" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                         android:layout_marginTop="20dp"
                         android:fontFamily="sans-serif-black"
                         android:gravity="center_horizontal"
-                        android:text="@string/donate"
+                        android:text="@string/request"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -109,7 +109,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_vreq"
+                        android:id="@+id/reque_check"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
@@ -122,7 +122,7 @@
                         android:layout_marginTop="20dp"
                         android:fontFamily="sans-serif-black"
                         android:gravity="center_horizontal"
-                        android:text="@string/view"
+                        android:text="@string/request_status"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>

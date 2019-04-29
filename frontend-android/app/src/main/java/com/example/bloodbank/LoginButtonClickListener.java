@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.navigation.Navigation;
 import androidx.navigation.NavController;
@@ -39,11 +40,18 @@ public class LoginButtonClickListener implements RequestCallback, View.OnClickLi
             if (ok) {
                 Log.d("login", "ok");
                 String token = obj.getString("token");
-                SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank", Context.MODE_PRIVATE);
+                SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
                 prefs.edit().putString("token", token).apply();
                 Log.d("token", token);
-                NavController navController = Navigation.findNavController(mParentView);
-                navController.navigate(R.id.action_des_log_to_donor_dash);
+                if(obj.getString("user_type").equals("DONOR")) {
+                    NavController navController = Navigation.findNavController(mParentView);
+                    navController.navigate(R.id.action_des_log_to_des_donor_dash);
+                }else if(obj.getString("user_type").equals("REQUESTER")){
+                    NavController navController = Navigation.findNavController(mParentView);
+                    navController.navigate(R.id.action_des_log_to_des_reque_dash);
+                }else{
+                    Toast.makeText(ctx,"Invalid Usertype",Toast.LENGTH_SHORT).show();
+                }
             }else {
                 Log.d("misc", "not ok");
                 String error = obj.getString("error");

@@ -16,8 +16,17 @@
     <string name="confirm">Confirm</string>
     <string name="donor">Donor</string>
     <string name="requester">Requester</string>
-    <string name="donor_dash">Donor Dashboard</string>
-    <string name="donor_upinfo">Donor Upload Info</string>
+    <string name="dash">Dashboard</string>
+    <string name="upinfo">Upload Info</string>
+    <string name="mreq">Make Request</string>
+    <string name="vreq">View Request</string>
+    <string name="check">Status</string>
+    <string name="history">History</string>
+    <string name="ask_donate">Are you sure you want to donate?</string>
+    <string name="ask_requester">Are you sure you want to make a new request?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -33,7 +42,7 @@
     <string name="menu_send">Send</string>
 
     <string name="update">Update Information</string>
-    <string name="history">View History</string>
+
     <string name="donate">Donate</string>
     <string name="request_status">Request Status</string>
     <string name="request">Make Request</string>

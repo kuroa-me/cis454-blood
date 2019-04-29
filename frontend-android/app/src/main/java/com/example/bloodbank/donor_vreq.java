@@ -5,25 +5,21 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link donor_upinfo.OnFragmentInteractionListener} interface
+ * {@link donor_vreq.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link donor_upinfo#newInstance} factory method to
+ * Use the {@link donor_vreq#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class donor_upinfo extends Fragment {
+public class donor_vreq extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,9 +31,7 @@ public class donor_upinfo extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    Context mCtx;
-
-    public donor_upinfo() {
+    public donor_vreq() {
         // Required empty public constructor
     }
 
@@ -47,11 +41,11 @@ public class donor_upinfo extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment donor_upinfo.
+     * @return A new instance of fragment donor_vreq.
      */
     // TODO: Rename and change types and number of parameters
-    public static donor_upinfo newInstance(String param1, String param2) {
-        donor_upinfo fragment = new donor_upinfo();
+    public static donor_vreq newInstance(String param1, String param2) {
+        donor_vreq fragment = new donor_vreq();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,22 +66,8 @@ public class donor_upinfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_donor_upinfo, container, false);
-        Button button = v.findViewById(R.id.button);//getActivity().findViewById(R.id.button);
-        try {
-            //Log.d("donorInfofrag", "setbtn onclick");
-            button.setOnClickListener(new DonorInfoUpdateClickListener(mCtx, v));
-        } catch(Exception e){
-            Log.d("donorInfofrag", e.toString());
-        }
-        return v;
+        return inflater.inflate(R.layout.fragment_donor_vreq, container, false);
     }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-
-        }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -105,7 +85,6 @@ public class donor_upinfo extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        mCtx = context;
     }
 
     @Override

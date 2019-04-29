@@ -7,23 +7,25 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.google.android.material.navigation.NavigationView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link donor_upinfo.OnFragmentInteractionListener} interface
+ * {@link reque_dash.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link donor_upinfo#newInstance} factory method to
+ * Use the {@link reque_dash#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class donor_upinfo extends Fragment {
+public class reque_dash extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,9 +37,7 @@ public class donor_upinfo extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    Context mCtx;
-
-    public donor_upinfo() {
+    public reque_dash() {
         // Required empty public constructor
     }
 
@@ -47,11 +47,11 @@ public class donor_upinfo extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment donor_upinfo.
+     * @return A new instance of fragment reque_dash.
      */
     // TODO: Rename and change types and number of parameters
-    public static donor_upinfo newInstance(String param1, String param2) {
-        donor_upinfo fragment = new donor_upinfo();
+    public static reque_dash newInstance(String param1, String param2) {
+        reque_dash fragment = new reque_dash();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,32 +62,67 @@ public class donor_upinfo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setDrawer();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    private void setDrawer(){
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem nav_login  = menu.findItem(R.id.des_log);
+        nav_login.setVisible(false);
+        MenuItem nav_regis  = menu.findItem(R.id.des_reg);
+        nav_regis.setVisible(false);
+        MenuItem nav_select  = menu.findItem(R.id.des_select);
+        nav_select.setVisible(false);
+        MenuItem nav_reque_check  = menu.findItem(R.id.des_reque_check);
+        nav_reque_check.setVisible(true);
+        MenuItem nav_reque_dash  = menu.findItem(R.id.des_reque_dash);
+        nav_reque_dash.setVisible(true);
+        MenuItem nav_reque_history  = menu.findItem(R.id.des_reque_history);
+        nav_reque_history.setVisible(true);
+        MenuItem nav_reque_mreq  = menu.findItem(R.id.des_reque_mreq);
+        nav_reque_mreq.setVisible(true);
+        MenuItem nav_reque_upinfo  = menu.findItem(R.id.des_reque_upinfo);
+        nav_reque_upinfo.setVisible(true);
+        MenuItem nav_donor_dash  = menu.findItem(R.id.des_donor_dash);
+        nav_donor_dash.setVisible(false);
+        MenuItem nav_donor_donate  = menu.findItem(R.id.des_donor_donate);
+        nav_donor_donate.setVisible(false);
+        MenuItem nav_donor_history  = menu.findItem(R.id.des_donor_history);
+        nav_donor_history.setVisible(false);
+        MenuItem nav_donor_upinfo  = menu.findItem(R.id.des_donor_upinfo);
+        nav_donor_upinfo.setVisible(false);
+        MenuItem nav_donor_vreq  = menu.findItem(R.id.des_donor_vreq);
+        nav_donor_vreq.setVisible(false);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_donor_upinfo, container, false);
-        Button button = v.findViewById(R.id.button);//getActivity().findViewById(R.id.button);
-        try {
-            //Log.d("donorInfofrag", "setbtn onclick");
-            button.setOnClickListener(new DonorInfoUpdateClickListener(mCtx, v));
-        } catch(Exception e){
-            Log.d("donorInfofrag", e.toString());
-        }
-        return v;
+        return inflater.inflate(R.layout.fragment_reque_dash, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        }
+        ImageButton uploadImg = getView().findViewById(R.id.reque_upinfo);
+        uploadImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_upinfo, null));
+
+        ImageButton checkImg = getView().findViewById(R.id.reque_check);
+        checkImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_check, null));
+
+        ImageButton historyImg = getView().findViewById(R.id.reque_history);
+        historyImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_history, null));
+
+        ImageButton mreqImg = getView().findViewById(R.id.reque_mreq);
+        mreqImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_mreq, null));
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -105,7 +140,6 @@ public class donor_upinfo extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        mCtx = context;
     }
 
     @Override

@@ -32,11 +32,22 @@ public class MainActivity extends AppCompatActivity
         register.OnFragmentInteractionListener,
         login.OnFragmentInteractionListener,
         donor_dash.OnFragmentInteractionListener,
-        donor_upinfo.OnFragmentInteractionListener{
+        donor_upinfo.OnFragmentInteractionListener,
+        donor_history.OnFragmentInteractionListener,
+        donor_vreq.OnFragmentInteractionListener,
+        donor_donate.OnFragmentInteractionListener,
+        reque_dash.OnFragmentInteractionListener,
+        reque_history.OnFragmentInteractionListener,
+        reque_mreq.OnFragmentInteractionListener,
+        reque_upinfo.OnFragmentInteractionListener,
+        reque_check.OnFragmentInteractionListener
+{
 
     private DrawerLayout drawerLayout;
     private NavController navController;
     private NavigationView navigationView;
+
+    AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +61,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.des_donor_dash, R.id.des_reque_dash, R.id.des_select)
+                .setDrawerLayout(drawerLayout)
+                .build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        //NavigationUI.setupWithNavController(toolbar, navController, drawerLayout);
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView,navController);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,18 +81,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-/*
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
-                .setDrawerLayout(drawerLayout)
-                .build();
-*/
+
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         // Allows NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation.
-        return NavigationUI.navigateUp(navController, drawerLayout);
+        return NavigationUI.navigateUp(navController, appBarConfiguration);
+        //return NavigationUI.navigateUp(navController, drawerLayout);
 
     }
 
