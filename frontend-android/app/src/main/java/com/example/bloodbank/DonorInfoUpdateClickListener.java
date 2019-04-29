@@ -7,80 +7,52 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RegisterButtonClickListener implements View.OnClickListener, RequestCallback {
-    //JSONObject reg = new JSONObject();
+public class DonorInfoUpdateClickListener implements RequestCallback, View.OnClickListener {
+    SharedPreferences prefs;
     JSONArray bloodTypes;
     Context ctx;
     View mParentView;
-    RadioGroup radioGroup;
-    RadioButton donor, requester;
-    public RegisterButtonClickListener(Context c, View parent){
+    public DonorInfoUpdateClickListener(Context c, View parent){
         APICaller caller = new APICaller("http://nj.kuroa.me:8080/", c);
         caller.miscGetBloodTypes(this);
         Log.d("regbtn", "constructor");
         mParentView = parent;
-        /*try {
-            reg.put("username", username);
-            reg.put("password", password);
-            reg.put("is_donor", isDonor);
-            reg.put("first_name", firstName);
-            reg.put("last_name", lastName);
-            reg.put("blood_type", bloodType);
-            reg.put("age", age);
-            reg.put("sex", sex);
-            reg.put("height", height);
-        } catch (Exception e) {
-        }*/
         ctx = c;
     }
 
-    public void onClick(View vBtn){
-        try {
-            Log.d("regBtn", "onClick");
-
+    public void onClick(View mView){
+        try{
+            Log.d("userUpdate", "onClick");
+            prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+            Log.d("donorUpdate", token);
             View v = mParentView;
-            radioGroup = v.findViewById(R.id.radio_group);
-            donor = v.findViewById(R.id.donor_button);
-            requester = v.findViewById(R.id.requester_button);
             APICaller c = new APICaller("http://nj.kuroa.me:8080/", ctx);
-            String username = ((EditText) v.findViewById(R.id.register_username)).getText().toString();
             String password = ((EditText) v.findViewById(R.id.register_password)).getText().toString();
             String firstName = ((EditText) v.findViewById(R.id.register_firstname)).getText().toString();
             String lastName = ((EditText) v.findViewById(R.id.register_lastname)).getText().toString();
             String mBloodType = ((EditText) v.findViewById(R.id.register_bloodtype)).getText().toString();
-            Boolean isDonor = true;
             int bloodTypeId = -1;
             int age = Integer.parseInt(((EditText) v.findViewById(R.id.register_age)).getText().toString());
             String sex = ((EditText) v.findViewById(R.id.register_sex)).getText().toString();
             int height = Integer.parseInt(((EditText) v.findViewById(R.id.register_height)).getText().toString());
-            int selectedId = radioGroup.getCheckedRadioButtonId();
-            if(selectedId == donor.getId()){
-                isDonor = true;
-            }else if(selectedId == requester.getId()){
-                isDonor = false;
-            }else{
-                Log.d("isDonor", "error");
-            }
             for (int i = 0; i < bloodTypes.length(); i++) {
                 JSONObject bt = bloodTypes.getJSONObject(i);
                 if (bt.getString("type_name").equals(mBloodType)) {
                     bloodTypeId = bt.getInt("id");
                 }
             }
-            c.userRegister(username, password, isDonor, firstName, lastName, bloodTypeId, age, sex, height, this);
-
-        } catch (Exception e) {
-            Log.d("regbtn", e.toString());
+            c.userUpdate(token, password, firstName, lastName, bloodTypeId, age, sex, height, this);
+        }catch(Exception e){
+            Log.d("login",e.toString());
         }
     }
 
@@ -101,13 +73,10 @@ public class RegisterButtonClickListener implements View.OnClickListener, Reques
                         Integer id = bt.getInt("id");
                         Log.d("misc", id.toString());
                     }
-                }else if(obj.has("token")) {
-                    String token = obj.getString("token");
-                    SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
-                    prefs.edit().putString("token", token).apply();
-
-                } else {
-                    Log.d("misc", "invslid res");
+                }else {
+                    Toast.makeText(ctx,"Updated",Toast.LENGTH_SHORT).show();
+                    NavController navController = Navigation.findNavController(mParentView);
+                    //navController.navigate(R.id.action_des_update_to_donor_dash);
                 }
             } else {
                 Log.d("misc", "not ok");

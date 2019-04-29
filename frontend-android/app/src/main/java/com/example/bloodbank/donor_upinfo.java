@@ -7,9 +7,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 
@@ -32,6 +34,8 @@ public class donor_upinfo extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    Context mCtx;
 
     public donor_upinfo() {
         // Required empty public constructor
@@ -68,7 +72,15 @@ public class donor_upinfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donor_upinfo, container, false);
+        View v = inflater.inflate(R.layout.fragment_donor_upinfo, container, false);
+        Button button = v.findViewById(R.id.button);//getActivity().findViewById(R.id.button);
+        try {
+            //Log.d("donorInfofrag", "setbtn onclick");
+            button.setOnClickListener(new DonorInfoUpdateClickListener(mCtx, v));
+        } catch(Exception e){
+            Log.d("donorInfofrag", e.toString());
+        }
+        return v;
     }
 
     @Override
@@ -93,6 +105,7 @@ public class donor_upinfo extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override
