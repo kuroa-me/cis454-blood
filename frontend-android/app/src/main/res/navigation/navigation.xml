@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_des_log_to_donor_dash"
             app:destination="@id/des_donor_dash" />
+        <action
+            android:id="@+id/action_des_log_to_des_reque_dash"
+            app:destination="@id/des_reque_dash" />
     </fragment>
     <fragment
         android:id="@+id/des_reg"
@@ -22,6 +25,9 @@
         <action
             android:id="@+id/action_des_reg_to_des_donor_dash"
             app:destination="@id/des_donor_dash" />
+        <action
+            android:id="@+id/action_des_reg_to_des_reque_dash"
+            app:destination="@id/des_reque_dash" />
     </fragment>
     <fragment
         android:id="@+id/des_select"
@@ -43,10 +49,64 @@
         <action
             android:id="@+id/action_donor_dash_to_donor_upinfo"
             app:destination="@id/des_donor_upinfo" />
+        <action
+            android:id="@+id/action_des_donor_dash_to_des_donor_donate"
+            app:destination="@id/des_donor_donate" />
+        <action
+            android:id="@+id/action_des_donor_dash_to_des_donor_history"
+            app:destination="@id/des_donor_history" />
+        <action
+            android:id="@+id/action_des_donor_dash_to_des_donor_vreq"
+            app:destination="@id/des_donor_vreq" />
     </fragment>
     <fragment
         android:id="@+id/des_donor_upinfo"
         android:name="com.example.bloodbank.donor_upinfo"
         android:label="fragment_donor_upinfo"
         tools:layout="@layout/fragment_donor_upinfo" />
+    <fragment
+        android:id="@+id/des_donor_donate"
+        android:name="com.example.bloodbank.donor_donate"
+        android:label="fragment_donor_donate"
+        tools:layout="@layout/fragment_donor_donate" />
+    <fragment
+        android:id="@+id/des_donor_history"
+        android:name="com.example.bloodbank.donor_history"
+        android:label="fragment_donor_history"
+        tools:layout="@layout/fragment_donor_history" />
+    <fragment
+        android:id="@+id/des_donor_vreq"
+        android:name="com.example.bloodbank.donor_vreq"
+        android:label="fragment_donor_vreq"
+        tools:layout="@layout/fragment_donor_vreq" />
+    <fragment
+        android:id="@+id/des_reque_mreq"
+        android:name="com.example.bloodbank.reque_mreq"
+        android:label="fragment_reque_mreq"
+        tools:layout="@layout/fragment_reque_mreq" />
+    <fragment
+        android:id="@+id/des_reque_history"
+        android:name="com.example.bloodbank.reque_history"
+        android:label="fragment_reque_history"
+        tools:layout="@layout/fragment_reque_history" />
+    <fragment
+        android:id="@+id/des_reque_upinfo"
+        android:name="com.example.bloodbank.reque_upinfo"
+        android:label="fragment_reque_upinfo"
+        tools:layout="@layout/fragment_reque_upinfo" />
+    <fragment
+        android:id="@+id/des_reque_dash"
+        android:name="com.example.bloodbank.reque_dash"
+        android:label="fragment_reque_dash"
+        tools:layout="@layout/fragment_reque_dash" >
+        <action
+            android:id="@+id/action_des_reque_dash_to_des_reque_mreq"
+            app:destination="@id/des_reque_mreq" />
+        <action
+            android:id="@+id/action_des_reque_dash_to_des_reque_history"
+            app:destination="@id/des_reque_history" />
+        <action
+            android:id="@+id/action_des_reque_dash_to_des_reque_upinfo"
+            app:destination="@id/des_reque_upinfo" />
+    </fragment>
 </navigation>

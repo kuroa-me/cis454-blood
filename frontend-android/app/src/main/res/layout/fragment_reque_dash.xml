@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".donor_dash">
+    tools:context=".reque_dash">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
 
 
         <ImageButton
-            android:id="@+id/donor_upinfo"
+            android:id="@+id/reque_upinfo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="68dp"
@@ -35,10 +35,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/donor_upinfo" />
+            app:layout_constraintTop_toBottomOf="@+id/reque_upinfo" />
 
         <ImageButton
-            android:id="@+id/donor_history"
+            android:id="@+id/reque_history"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="152dp"
@@ -57,35 +57,12 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@string/history"
-            app:layout_constraintBottom_toTopOf="@+id/donor_vreq"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/donor_history"
             app:layout_constraintVertical_bias="0.008" />
 
         <ImageButton
-            android:id="@+id/donor_donate"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="68dp"
-            android:layout_marginBottom="197dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/donate" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="80dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="88dp"
-            android:layout_marginBottom="142dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/donate"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/donor_vreq"
+            android:id="@+id/reque_mreq"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="68dp"
