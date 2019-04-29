@@ -16,6 +16,8 @@
     <string name="confirm">Confirm</string>
     <string name="donor">Donor</string>
     <string name="requester">Requester</string>
+    <string name="donor_dash">Donor Dashboard</string>
+    <string name="donor_upinfo">Donor Upload Info</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -36,4 +38,7 @@
     <string name="request_status">Request Status</string>
     <string name="request">Make Request</string>
     <string name="view">View Request</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

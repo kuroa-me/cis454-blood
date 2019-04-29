@@ -28,7 +28,11 @@ import androidx.navigation.ui.NavigationUI;
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
-        implements select.OnFragmentInteractionListener, register.OnFragmentInteractionListener, login.OnFragmentInteractionListener {
+        implements select.OnFragmentInteractionListener,
+        register.OnFragmentInteractionListener,
+        login.OnFragmentInteractionListener,
+        donor_dash.OnFragmentInteractionListener,
+        donor_upinfo.OnFragmentInteractionListener{
 
     private DrawerLayout drawerLayout;
     private NavController navController;

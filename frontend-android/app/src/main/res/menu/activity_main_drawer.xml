@@ -17,7 +17,11 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/signout" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/des_donor_dash"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/donor_dash" />
+        <item
+            android:id="@+id/des_donor_upinfo"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
     </group>

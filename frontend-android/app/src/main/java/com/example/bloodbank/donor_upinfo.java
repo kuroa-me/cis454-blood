@@ -1,29 +1,27 @@
 package com.example.bloodbank;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link login.OnFragmentInteractionListener} interface
+ * {@link donor_upinfo.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link login#newInstance} factory method to
+ * Use the {@link donor_upinfo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class login extends Fragment {
+public class donor_upinfo extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,10 +30,10 @@ public class login extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Context mCtx;
+
     private OnFragmentInteractionListener mListener;
 
-    public login() {
+    public donor_upinfo() {
         // Required empty public constructor
     }
 
@@ -45,11 +43,11 @@ public class login extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment login.
+     * @return A new instance of fragment donor_upinfo.
      */
     // TODO: Rename and change types and number of parameters
-    public static login newInstance(String param1, String param2) {
-        login fragment = new login();
+    public static donor_upinfo newInstance(String param1, String param2) {
+        donor_upinfo fragment = new donor_upinfo();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,35 +62,20 @@ public class login extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
-        Button button = v.findViewById(R.id.des_log);
-        try {
-            Log.d("logfrag", "listen");
-            button.setOnClickListener(new RealLoginButtonClickListener(mCtx, v));
-        } catch(Exception e){
-            Log.d("logfrag", e.toString());
-        }
-        return v;
+        return inflater.inflate(R.layout.fragment_donor_upinfo, container, false);
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        Button loginBtn = getView().findViewById(R.id.button2);
-        loginBtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_log_to_donor_dash, null));
-    }
+        }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -110,7 +93,6 @@ public class login extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        mCtx = context;
     }
 
     @Override

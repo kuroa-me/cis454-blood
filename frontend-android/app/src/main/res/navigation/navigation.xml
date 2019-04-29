@@ -9,7 +9,11 @@
         android:id="@+id/des_log"
         android:name="com.example.bloodbank.login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_des_log_to_donor_dash"
+            app:destination="@id/des_donor_dash" />
+    </fragment>
     <fragment
         android:id="@+id/des_reg"
         android:name="com.example.bloodbank.register"
@@ -31,4 +35,18 @@
             android:id="@+id/action_to_login"
             app:destination="@id/des_log" />
     </fragment>
+    <fragment
+        android:id="@+id/des_donor_dash"
+        android:name="com.example.bloodbank.donor_dash"
+        android:label="fragment_donor_dash"
+        tools:layout="@layout/fragment_donor_dash" >
+        <action
+            android:id="@+id/action_donor_dash_to_donor_upinfo"
+            app:destination="@id/des_donor_upinfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/des_donor_upinfo"
+        android:name="com.example.bloodbank.donor_upinfo"
+        android:label="fragment_donor_upinfo"
+        tools:layout="@layout/fragment_donor_upinfo" />
 </navigation>

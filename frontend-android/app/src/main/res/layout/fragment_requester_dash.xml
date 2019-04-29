@@ -8,7 +8,7 @@
     android:baselineAligned="false">
 
     <ImageButton
-        android:id="@+id/requester_upload"
+        android:id="@+id/donor_upinfo_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="68dp"
@@ -31,7 +31,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requester_upload" />
+        app:layout_constraintTop_toBottomOf="@+id/donor_upinfo_img" />
 
     <ImageButton
         android:id="@+id/requester_history"
