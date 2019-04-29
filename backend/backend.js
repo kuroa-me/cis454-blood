@@ -233,9 +233,9 @@ api.donor.donate = async function (req, res) {
         };
     }
 
-    var { timestamp } = req.body;
+    var { time } = req.body;
 
-    if (!timestamp) {
+    if (!time) {
         return {
             ok: false,
             error: 'Missing info.'
@@ -259,7 +259,7 @@ api.donor.donate = async function (req, res) {
     var info = infos[0];
 
     await sql('insert into blood SET ?', {
-        from_id: s.id, date_received: timestamp, blood_type: info.blood_type
+        from_id: s.id, date_received: time, blood_type: info.blood_type
     });
 
     return {ok: true};
