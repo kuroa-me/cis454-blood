@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -105,7 +106,13 @@ public class RegisterButtonClickListener implements View.OnClickListener, Reques
                     String token = obj.getString("token");
                     SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
                     prefs.edit().putString("token", token).apply();
-
+                    if(obj.getString("user_type").equals("DONOR")) {
+                        NavController navController = Navigation.findNavController(mParentView);
+                        navController.navigate(R.id.action_des_reg_to_des_donor_dash);
+                    }else if(obj.getString("user_type").equals("REQUESTER")){
+                        NavController navController = Navigation.findNavController(mParentView);
+                        navController.navigate(R.id.action_des_reg_to_des_reque_dash);
+                    }
                 } else {
                     Log.d("misc", "invslid res");
                 }
