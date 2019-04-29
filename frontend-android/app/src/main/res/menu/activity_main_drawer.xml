@@ -5,63 +5,63 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/des_select"
+            android:icon="@drawable/ic_twotone_lock_24px"
+            android:title="@string/signout" />
+        <item
             android:id="@+id/des_reg"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_twotone_group_add_24px"
             android:title="@string/register" />
         <item
             android:id="@+id/des_log"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_twotone_input_24px"
             android:title="@string/login" />
         <item
-            android:id="@+id/des_select"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/signout" />
-        <item
             android:id="@+id/des_donor_dash"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_dashboard_24px"
             android:title="@string/dash" />
         <item
             android:id="@+id/des_donor_upinfo"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_contact_mail_24px"
             android:menuCategory="secondary"
             android:title="@string/upinfo" />
         <item
             android:id="@+id/des_donor_history"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_archive_24px"
             android:menuCategory="secondary"
             android:title="@string/history" />
         <item
             android:id="@+id/des_donor_donate"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_wb_sunny_24px"
             android:menuCategory="secondary"
             android:title="@string/donate" />
         <item
             android:id="@+id/des_donor_vreq"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_event_note_24px"
             android:menuCategory="secondary"
             android:title="@string/vreq" />
         <item
             android:id="@+id/des_reque_dash"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_dashboard_24px"
             android:title="@string/dash" />
         <item
             android:id="@+id/des_reque_upinfo"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_contact_mail_24px"
             android:menuCategory="secondary"
             android:title="@string/upinfo" />
         <item
             android:id="@+id/des_reque_history"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_archive_24px"
             android:menuCategory="secondary"
             android:title="@string/history" />
         <item
             android:id="@+id/des_reque_mreq"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_how_to_vote_24px"
             android:menuCategory="secondary"
             android:title="@string/mreq" />
         <item
             android:id="@+id/des_reque_check"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_twotone_history_24px"
             android:menuCategory="secondary"
             android:title="@string/check" />
     </group>
