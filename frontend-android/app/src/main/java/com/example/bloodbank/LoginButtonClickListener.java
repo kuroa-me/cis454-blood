@@ -45,7 +45,7 @@ public class LoginButtonClickListener implements RequestCallback, View.OnClickLi
                 Log.d("token", token);
                 if(obj.getString("user_type").equals("DONOR")) {
                     NavController navController = Navigation.findNavController(mParentView);
-                    navController.navigate(R.id.action_des_log_to_donor_dash);
+                    navController.navigate(R.id.action_des_log_to_des_donor_dash);
                 }else if(obj.getString("user_type").equals("REQUESTER")){
                     NavController navController = Navigation.findNavController(mParentView);
                     navController.navigate(R.id.action_des_log_to_des_reque_dash);

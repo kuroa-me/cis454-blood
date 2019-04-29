@@ -23,19 +23,23 @@
         <item
             android:id="@+id/des_donor_upinfo"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/upinfo" />
         <item
             android:id="@+id/des_donor_history"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/history" />
-        <item
-            android:id="@+id/des_donor_vreq"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/vreq" />
         <item
             android:id="@+id/des_donor_donate"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/donate" />
+        <item
+            android:id="@+id/des_donor_vreq"
+            android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
+            android:title="@string/vreq" />
         <item
             android:id="@+id/des_reque_dash"
             android:icon="@drawable/ic_menu_manage"
@@ -43,18 +47,22 @@
         <item
             android:id="@+id/des_reque_upinfo"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/upinfo" />
         <item
             android:id="@+id/des_reque_history"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/history" />
         <item
             android:id="@+id/des_reque_mreq"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/mreq" />
         <item
             android:id="@+id/des_reque_check"
             android:icon="@drawable/ic_menu_manage"
+            android:menuCategory="secondary"
             android:title="@string/check" />
     </group>
 </menu>

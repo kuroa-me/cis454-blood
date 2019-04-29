@@ -5,12 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -103,6 +105,23 @@ public class reque_dash extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_reque_dash, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton uploadImg = getView().findViewById(R.id.reque_upinfo);
+        uploadImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_upinfo, null));
+
+        ImageButton checkImg = getView().findViewById(R.id.reque_check);
+        checkImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_check, null));
+
+        ImageButton historyImg = getView().findViewById(R.id.reque_history);
+        historyImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_history, null));
+
+        ImageButton mreqImg = getView().findViewById(R.id.reque_mreq);
+        mreqImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_reque_dash_to_des_reque_mreq, null));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

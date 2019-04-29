@@ -29,7 +29,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_upinfo"
+                        android:id="@+id/reque_upinfo"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
@@ -85,7 +85,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/donor_mreq"
+                        android:id="@+id/reque_mreq"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"

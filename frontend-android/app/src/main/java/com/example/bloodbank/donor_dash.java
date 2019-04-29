@@ -112,6 +112,15 @@ public class donor_dash extends Fragment {
 
         ImageButton uploadImg = getView().findViewById(R.id.donor_upinfo);
         uploadImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_donor_dash_to_donor_upinfo, null));
+
+        ImageButton donateImg = getView().findViewById(R.id.donor_donate);
+        donateImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_donor_dash_to_des_donor_donate, null));
+
+        ImageButton historyImg = getView().findViewById(R.id.donor_history);
+        historyImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_donor_dash_to_des_donor_history, null));
+
+        ImageButton vreqImg = getView().findViewById(R.id.donor_vreq);
+        vreqImg.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_des_donor_dash_to_des_donor_vreq, null));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
