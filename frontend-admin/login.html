@@ -48,8 +48,15 @@
         var api = new APICaller(base_url);
         api('user/auth', {username: usr.value, password: pw.value}, function(returned) {
             if(returned.ok == true) {
-                localStorage.token = returned.token;
-                window.location.href = 'index.html';
+            	if(returned.user_type!="ADMIN"){
+            		alert("You are not Administrator!")
+            		location.reload();
+            	}
+            	else{
+            		localStorage.token = returned.token;
+                	window.location.href = 'index.html';
+            	}
+                
             } else {
                 document.getElementById("errmsg").innerText = returned.error;
             }
