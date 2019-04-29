@@ -3,4 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".donor_vreq"/>
+    tools:context=".donor_vreq">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donor_vreq_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

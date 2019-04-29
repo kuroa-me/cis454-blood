@@ -36,5 +36,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     // For Kotlin use navigation-fragment-ktx
     implementation "androidx.navigation:navigation-ui:$nav_version"
-    implementation 'com.google.android.material:material:1.0.0'// For Kotlin use navigation-ui-ktx
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'// For Kotlin use navigation-ui-ktx
 }
