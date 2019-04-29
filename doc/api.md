@@ -87,7 +87,7 @@ ok: bool,
 
 #### /user/auth
 
-Authenticate a user, return token if success (ok: true), otherwise an error message will be set.
+Authenticate a user, return token & user type if success (ok: true), otherwise an error message will be set.
 
 params:
 
@@ -101,12 +101,13 @@ returns:
 ```
 ok: bool,
 ?token: string,
+?user_type: string,
 ?error: string
 ```
 
 #### /user/register
 
-Register a new user, return token if success (ok: true), otherwise an error message will be set.
+Register a new user, return token & user type if success (ok: true), otherwise an error message will be set.
 
 params:
 
@@ -127,6 +128,7 @@ returns:
 ```
 ok: bool,
 ?token: string,
+?user_type: string,
 ?error: string
 ```
 

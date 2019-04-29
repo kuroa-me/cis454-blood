@@ -92,7 +92,7 @@ api.user.auth = async function (req, res) {
         };
     }
 
-    var result = await sql('select id from user where password = MD5(?) and username = ?',
+    var result = await sql('select type, id from user where password = MD5(?) and username = ?',
                            [password, username]);
 
     if (result.length == 0) {
@@ -106,7 +106,8 @@ api.user.auth = async function (req, res) {
 
     return {
         ok: true,
-        token: session.new(result[0].id)
+        token: session.new(result[0].id),
+        user_type: result[0].type
     };
 };
 handlers.push({path: '/user/auth', handler: api.user.auth});
@@ -134,7 +135,7 @@ api.user.register = async function (req, res) {
         username, first_name, last_name, password: MD5(password), type: is_donor ? 'DONOR' : 'REQUESTER'
     });
 
-    var new_user = await sql('select id from user where username = ?', [username]);
+    var new_user = await sql('select id, type from user where username = ?', [username]);
 
     if (new_user.length > 1) throw "after register, mutiple user with id " + username + " exist.";
 
@@ -146,7 +147,8 @@ api.user.register = async function (req, res) {
 
     return {
         ok: true,
-        token: session.new(new_user_id)
+        token: session.new(new_user_id),
+        user_type: new_user[0].type
     };
 };
 handlers.push({path: '/user/register', handler: api.user.register});
