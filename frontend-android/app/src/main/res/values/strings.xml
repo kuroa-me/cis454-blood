@@ -22,6 +22,10 @@
     <string name="vreq">View Request</string>
     <string name="check">Status</string>
     <string name="history">History</string>
+    <string name="ask_donate">Are you sure you want to donate?</string>
+    <string name="ask_requester">Are you sure you want to make a new request?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
