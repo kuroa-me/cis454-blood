@@ -5,10 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,6 +25,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class donor_history extends Fragment {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    Context mCtx;
+
+    private List<donor_history_listitem> listItems;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,6 +81,33 @@ public class donor_history extends Fragment {
         return inflater.inflate(R.layout.fragment_donor_history, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.donor_history_recycleview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
+
+        listItems = new ArrayList<>();
+
+        for(int i=0; i<10; i++){
+            donor_history_listitem listItem = new donor_history_listitem(
+                    "donor_id" + i+1,
+                    "blood_type" + i+1,
+                    "date_received" + i+1,
+                    "used" + i+1,
+                    "used_date" + i+1,
+                    "used_by" + i+1
+            );
+
+            listItems.add(listItem);
+        }
+
+        adapter = new donor_history_adapter(listItems,mCtx);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -85,6 +124,7 @@ public class donor_history extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override

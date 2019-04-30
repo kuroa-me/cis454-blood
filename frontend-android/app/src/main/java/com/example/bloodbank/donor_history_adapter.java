@@ -1,5 +1,6 @@
 package com.example.bloodbank;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class donor_history_adapter extends RecyclerView.Adapter<donor_history_adapter.ViewHolder> {
 
+    private List<donor_history_listitem> listItems;
+    private Context context;
+
+    public donor_history_adapter(List<donor_history_listitem> listItems, Context context) {
+        this.listItems = listItems;
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -21,12 +31,22 @@ public class donor_history_adapter extends RecyclerView.Adapter<donor_history_ad
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final donor_history_listitem listItem = listItems.get(position);
+
+        holder.textView_donor_id.setText(listItem.getDonor_id());
+        holder.textView_blood_type.setText(listItem.getBlood_type());
+        holder.textView_date_received.setText(listItem.getDate_received());
+        holder.textView_used.setText(listItem.getUsed());
+        holder.textView_date_used.setText(listItem.getUsed_date());
+        holder.textView_used_by.setText(listItem.getUsed_by());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+
+        return listItems.size();
     }
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
