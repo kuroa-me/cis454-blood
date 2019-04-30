@@ -5,10 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,6 +25,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class reque_history extends Fragment {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    Context mCtx;
+
+    private List<reque_history_listitem> listItems;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,6 +79,29 @@ public class reque_history extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_reque_history, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.reque_history_recycleview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
+
+        listItems = new ArrayList<>();
+
+        for(int i=0; i<10; i++){
+            reque_history_listitem listItem = new reque_history_listitem(
+                    "date requested" ,
+                    "accpted",
+                    "date_accpted"
+            );
+
+            listItems.add(listItem);
+        }
+
+        adapter = new reque_history_adapter(listItems,mCtx);
+
+        recyclerView.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

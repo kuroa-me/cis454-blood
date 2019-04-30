@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".reque_check"/>
+    tools:context=".reque_check">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reque_check_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

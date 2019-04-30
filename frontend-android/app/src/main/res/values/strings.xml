@@ -31,6 +31,9 @@
     <string name="used">Used</string>
     <string name="date_used">Date Used</string>
     <string name="used_by">Used By</string>
+    <string name="date_requested">Date Requested</string>
+    <string name="accepted">Accpted</string>
+    <string name="date_accpted">Date Accpted</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
