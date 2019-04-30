@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -149,6 +150,8 @@ public class select extends Fragment implements RequestCallback {
             Log.d("select", "do jump");
             Log.d("select", obj.toString());
             String ut = obj.getString("type");
+            String welcome = "Welcome back, " + obj.getString("first_name") + " " + obj.getString("last_name");
+            Toast.makeText(mCtx,welcome,Toast.LENGTH_LONG).show();  
             if (ut.equals("DONOR")) {
                 Log.d("select", "do jump to d");
                 NavController navController = Navigation.findNavController(mView);
