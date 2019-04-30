@@ -1,6 +1,8 @@
 package com.example.bloodbank;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,10 +10,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +31,14 @@ import java.util.List;
  * Use the {@link donor_vreq#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class donor_vreq extends Fragment {
+public class donor_vreq extends Fragment implements RequestCallback{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     Context mCtx;
+
+    SharedPreferences prefs;
+    JSONArray bloodTypes;
 
     private List<donor_vreq_listitem> listItems;
 
@@ -85,6 +95,15 @@ public class donor_vreq extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        try{
+        prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+        APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
+        c.donorRequestList(token, this);
+        }catch(Exception e){
+
+        };
+
         recyclerView = (RecyclerView) view.findViewById(R.id.donor_vreq_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
@@ -104,6 +123,32 @@ public class donor_vreq extends Fragment {
         adapter = new donor_vreq_adapter(listItems,mCtx);
 
         recyclerView.setAdapter(adapter);
+    }
+
+    public void process(JSONObject obj){
+        try{
+            Log.d("viewReq", "process");
+            Boolean ok = obj.getBoolean("ok");
+            if(ok){
+                Log.d("viewReq", "OK");
+                bloodTypes = obj.getJSONArray("types");
+                for (int i = 0; i<bloodTypes.length(); i++) {
+                    JSONObject bt = bloodTypes.getJSONObject(i);
+                    Log.d("misc", bt.toString());
+                    Log.d("misc", bt.getString("type_name"));
+                    Integer id = bt.getInt("id");
+                    Log.d("misc", id.toString());
+                }
+                Log.d("viewReq", "loaded");
+            }else{
+                Log.d("misc", "not ok");
+                String error = obj.getString("error");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mCtx).setMessage(error);
+                AlertDialog alertDialog = dialog.show();
+            }
+        }catch(Exception e){
+
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
