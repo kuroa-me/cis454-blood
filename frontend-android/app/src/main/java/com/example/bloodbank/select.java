@@ -1,6 +1,7 @@
 package com.example.bloodbank;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONObject;
 
 
 /**
@@ -26,7 +31,7 @@ import com.google.android.material.navigation.NavigationView;
  * Use the {@link select#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class select extends Fragment {
+public class select extends Fragment implements RequestCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +42,8 @@ public class select extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    Context mCtx;
+    View mView;
     public select() {
         // Required empty public constructor
     }
@@ -106,14 +112,24 @@ public class select extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         return inflater.inflate(R.layout.fragment_select, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        mView = view;
+        SharedPreferences prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+        String token = prefs.getString("token", "qqqaq");
+        if (!token.equals("qqqaq")) {
+            APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
+            try {
+                c.userGet(token, this);
+            } catch (Exception e) {
+                Log.d("select", e.toString());
+            }
 
+        }
         Button logbtn = getView().findViewById(R.id.des_log);
         logbtn.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_login, null));
         Button regbtn = getView().findViewById(R.id.des_reg);
@@ -128,6 +144,28 @@ public class select extends Fragment {
     }
 
     @Override
+    public void process(JSONObject obj) {
+        try {
+            Log.d("select", "do jump");
+            Log.d("select", obj.toString());
+            String ut = obj.getString("type");
+            if (ut.equals("DONOR")) {
+                Log.d("select", "do jump to d");
+                NavController navController = Navigation.findNavController(mView);
+                navController.navigate(R.id.action_des_select_to_des_donor_dash);
+            }
+            if (ut.equals("REQUESTER")) {
+                Log.d("select", "do jump to r");
+                NavController navController = Navigation.findNavController(mView);
+                navController.navigate(R.id.action_des_select_to_des_reque_dash);
+            }
+
+        } catch (Exception e) {
+            Log.d("select", e.toString());
+        }
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -136,6 +174,8 @@ public class select extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        mCtx = context;
     }
 
     @Override
