@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".donor_history"/>
+    tools:context=".donor_history">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donor_history_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
