@@ -109,20 +109,6 @@ public class donor_vreq extends Fragment implements RequestCallback{
         recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
 
         listItems = new ArrayList<>();
-
-        for(int i=0; i<10; i++){
-            donor_vreq_listitem listItem = new donor_vreq_listitem(
-                    "name" + i+1,
-                    "age" + i+1,
-                    "sex" + i+1
-            );
-
-            listItems.add(listItem);
-        }
-
-        adapter = new donor_vreq_adapter(listItems,mCtx);
-
-        recyclerView.setAdapter(adapter);
     }
 
     public void process(JSONObject obj){
@@ -133,13 +119,20 @@ public class donor_vreq extends Fragment implements RequestCallback{
                 Log.d("viewReq", "OK");
                 bloodRequest = obj.getJSONArray("requests");
                 for (int i = 0; i<bloodRequest.length(); i++) {
-                    JSONObject bt = bloodRequest.getJSONObject(i);
-                    Log.d("misc", bt.toString());
-                    Log.d("misc", bt.getString("type_name"));
-                    Integer id = bt.getInt("id");
-                    Log.d("misc", id.toString());
+                    JSONObject request = bloodRequest.getJSONObject(i);
+                    donor_vreq_listitem listItem = new donor_vreq_listitem(
+                            request.getString("requester_name"),
+                            request.getString("requester_age"),
+                            request.getString("requester_sex")
+                    );
+                    //Integer id = request.getInt("id");
+                    Log.d("viewreq", request.toString());
+                    listItems.add(listItem);
                 }
                 Log.d("viewReq", "loaded");
+                adapter = new donor_vreq_adapter(listItems,mCtx);
+                recyclerView.setAdapter(adapter);
+
             }else{
                 Log.d("misc", "not ok");
                 String error = obj.getString("error");
@@ -147,7 +140,7 @@ public class donor_vreq extends Fragment implements RequestCallback{
                 AlertDialog alertDialog = dialog.show();
             }
         }catch(Exception e){
-
+            Log.d("viewreq", e.toString());
         }
     }
 
