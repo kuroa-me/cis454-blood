@@ -1,6 +1,8 @@
 package com.example.bloodbank;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,11 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,7 +31,7 @@ import java.util.List;
  * Use the {@link donor_history#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class donor_history extends Fragment {
+public class donor_history extends Fragment implements RequestCallback{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -82,29 +89,65 @@ public class donor_history extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        try{
+            SharedPreferences prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+            APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
+            c.donorGetDonates(token, this);
+        }catch(Exception e){
+            Log.d("viewReq", e.toString());
+        };
         recyclerView = (RecyclerView) view.findViewById(R.id.donor_history_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
 
         listItems = new ArrayList<>();
+    }
 
-        for(int i=0; i<10; i++){
-            donor_history_listitem listItem = new donor_history_listitem(
-                    "donor_id" + i+1,
-                    "blood_type" + i+1,
-                    "date_received" + i+1,
-                    "used" + i+1,
-                    "used_date" + i+1,
-                    "used_by" + i+1
-            );
+    @Override
+    public void process(JSONObject obj) {
+        try{
+            Log.d("viewReq", "process");
+            Boolean ok = obj.getBoolean("ok");
+            if(ok){
+                Log.d("viewReq", "OK");
+                JSONArray bloodHistory = obj.getJSONArray("history");
+                //Date d = new Date(10000); d.toString();
+                for (int i = 0; i<bloodHistory.length(); i++) {
+                    JSONObject history = bloodHistory.getJSONObject(i);
+                    String useDate = "Not used";
+                    if(history.getBoolean("used")){
+                        Date ud = new Date(history.getLong("date_used") * 1000);
+                        useDate = ud.toString();
+                    }
+                    Log.d("viewreq", history.toString());
+                    donor_history_listitem listItem = new donor_history_listitem(
+                            history.getString("donor_id"),
+                            history.getString("blood_type"),
+                            (new Date(history.getLong("date_received") * 1000)).toString(),
+                            history.getString("used"),
+                            useDate,
+                            history.getString("used_by")
+                    );
+                    //Integer id = request.getInt("id");
 
-            listItems.add(listItem);
+                    listItems.add(listItem);
+                }
+                Log.d("viewReq", "loaded");
+                adapter = new donor_history_adapter(listItems,mCtx);
+
+                recyclerView.setAdapter(adapter);
+
+            }else{
+                Log.d("misc", "not ok");
+                String error = obj.getString("error");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mCtx).setMessage(error);
+                AlertDialog alertDialog = dialog.show();
+            }
+        }catch(Exception e){
+            Log.d("viewreq", e.toString());
         }
-
-        adapter = new donor_history_adapter(listItems,mCtx);
-
-        recyclerView.setAdapter(adapter);
     }
 
 

@@ -96,12 +96,12 @@ public class donor_vreq extends Fragment implements RequestCallback{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         try{
-        prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
-        String token = prefs.getString("token", null);
-        APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
-        c.donorRequestList(token, this);
+            prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+            APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
+            c.donorRequestList(token, this);
         }catch(Exception e){
-
+            Log.d("viewReq", e.toString());
         };
 
         recyclerView = (RecyclerView) view.findViewById(R.id.donor_vreq_recycleview);
