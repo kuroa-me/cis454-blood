@@ -112,10 +112,10 @@ public class donor_history extends Fragment implements RequestCallback{
             Boolean ok = obj.getBoolean("ok");
             if(ok){
                 Log.d("viewReq", "OK");
-                JSONArray bloodHistory = obj.getJSONArray("history");
+                JSONArray donorHistory = obj.getJSONArray("history");
                 //Date d = new Date(10000); d.toString();
-                for (int i = 0; i<bloodHistory.length(); i++) {
-                    JSONObject history = bloodHistory.getJSONObject(i);
+                for (int i = 0; i<donorHistory.length(); i++) {
+                    JSONObject history = donorHistory.getJSONObject(i);
                     String useDate = "Not used";
                     if(history.getBoolean("used")){
                         Date ud = new Date(history.getLong("date_used") * 1000);
@@ -127,7 +127,7 @@ public class donor_history extends Fragment implements RequestCallback{
                             history.getString("blood_type"),
                             (new Date(history.getLong("date_received") * 1000)).toString(),
                             history.getString("used"),
-                            useDate,
+                             useDate,
                             history.getString("used_by")
                     );
                     //Integer id = request.getInt("id");

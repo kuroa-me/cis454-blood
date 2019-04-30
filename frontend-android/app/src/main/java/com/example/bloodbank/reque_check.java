@@ -1,6 +1,8 @@
 package com.example.bloodbank;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,11 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,7 +31,7 @@ import java.util.List;
  * Use the {@link reque_check#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class reque_check extends Fragment {
+public class reque_check extends Fragment implements RequestCallback{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -83,26 +90,58 @@ public class reque_check extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        try{
+            SharedPreferences prefs = mCtx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+            String token = prefs.getString("token", null);
+            APICaller c = new APICaller("http://nj.kuroa.me:8080/", mCtx);
+            c.requesterRequestList(token, this);
+        }catch(Exception e){
+            Log.d("RequeListCheck", e.toString());
+        }
         recyclerView = (RecyclerView) view.findViewById(R.id.reque_check_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
 
         listItems = new ArrayList<>();
 
-        for(int i=0; i<10; i++){
-            reque_history_listitem listItem = new reque_history_listitem(
-                    "date requested" ,
-                    "accpted",
-                    "date_accpted"
-            );
-
-            listItems.add(listItem);
-        }
-
-        adapter = new reque_history_adapter(listItems,mCtx);
-
-        recyclerView.setAdapter(adapter);
     }
+
+    public void process(JSONObject obj) {
+        try{
+            Log.d("RequeListCheck", "process");
+            Boolean ok = obj.getBoolean("ok");
+            if(ok){
+                Log.d("RequeListCheck","ok");
+                JSONArray requeHistory = obj.getJSONArray("requests");
+                for(int i = 0; i<requeHistory.length(); i++){
+                    JSONObject history = requeHistory.getJSONObject(i);
+                    int accept = history.getInt("accepted");
+                    if(accept == 0) {
+                        reque_history_listitem listItem = new reque_history_listitem(
+                                (new Date(history.getLong("date_requested") * 1000)).toString(),
+                                "No",
+                                "Not yet accepted"
+                        );
+                        listItems.add(listItem);
+                    }
+                }
+
+                adapter = new reque_history_adapter(listItems,mCtx);
+
+                recyclerView.setAdapter(adapter);
+
+            }else{
+                Log.d("misc", "not ok");
+                String error = obj.getString("error");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mCtx).setMessage(error);
+                AlertDialog alertDialog = dialog.show();
+            }
+
+        }catch(Exception e){
+            Log.d("RequeListCheck", e.toString());
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
