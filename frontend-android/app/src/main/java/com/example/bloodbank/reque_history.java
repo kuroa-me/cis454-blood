@@ -120,6 +120,7 @@ public class reque_history extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        mCtx = context;
     }
 
     @Override
