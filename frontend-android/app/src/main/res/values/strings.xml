@@ -26,6 +26,11 @@
     <string name="ask_requester">Are you sure you want to make a new request?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="donor_id">Donor ID</string>
+    <string name="date_received">Date Received</string>
+    <string name="used">Used</string>
+    <string name="date_used">Date Used</string>
+    <string name="used_by">Used By</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
