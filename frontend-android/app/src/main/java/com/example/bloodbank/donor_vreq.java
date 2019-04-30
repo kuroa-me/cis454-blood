@@ -38,7 +38,7 @@ public class donor_vreq extends Fragment implements RequestCallback{
     Context mCtx;
 
     SharedPreferences prefs;
-    JSONArray bloodTypes;
+    JSONArray bloodRequest;
 
     private List<donor_vreq_listitem> listItems;
 
@@ -131,9 +131,9 @@ public class donor_vreq extends Fragment implements RequestCallback{
             Boolean ok = obj.getBoolean("ok");
             if(ok){
                 Log.d("viewReq", "OK");
-                bloodTypes = obj.getJSONArray("types");
-                for (int i = 0; i<bloodTypes.length(); i++) {
-                    JSONObject bt = bloodTypes.getJSONObject(i);
+                bloodRequest = obj.getJSONArray("requests");
+                for (int i = 0; i<bloodRequest.length(); i++) {
+                    JSONObject bt = bloodRequest.getJSONObject(i);
                     Log.d("misc", bt.toString());
                     Log.d("misc", bt.getString("type_name"));
                     Integer id = bt.getInt("id");
