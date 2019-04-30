@@ -33,7 +33,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="50dp"
                         android:src="@drawable/uploadinfor" />
 
                     <TextView
@@ -58,7 +58,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="50dp"
                         android:src="@drawable/view_donate_history" />
 
                     <TextView
@@ -89,7 +89,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="50dp"
                         android:src="@drawable/donate" />
 
                     <TextView
@@ -113,7 +113,7 @@
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="50dp"
                         android:src="@drawable/request_status" />
 
                     <TextView

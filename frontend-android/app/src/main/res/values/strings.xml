@@ -9,7 +9,7 @@
     <string name="age">Age</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="blood">Blood Type</string>
+    <string name="blood">Blood Type ID</string>
     <string name="email">Email Address</string>
     <string name="phone">Phone Number</string>
     <string name="signout">Sign Out</string>
