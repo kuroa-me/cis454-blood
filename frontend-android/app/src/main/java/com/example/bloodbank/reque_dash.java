@@ -76,8 +76,6 @@ public class reque_dash extends Fragment {
         nav_login.setVisible(false);
         MenuItem nav_regis  = menu.findItem(R.id.des_reg);
         nav_regis.setVisible(false);
-        MenuItem nav_select  = menu.findItem(R.id.des_select);
-        nav_select.setVisible(false);
         MenuItem nav_reque_check  = menu.findItem(R.id.des_reque_check);
         nav_reque_check.setVisible(true);
         MenuItem nav_reque_dash  = menu.findItem(R.id.des_reque_dash);
@@ -98,6 +96,8 @@ public class reque_dash extends Fragment {
         nav_donor_upinfo.setVisible(false);
         MenuItem nav_donor_vreq  = menu.findItem(R.id.des_donor_vreq);
         nav_donor_vreq.setVisible(false);
+        MenuItem nav_select  = menu.findItem(R.id.des_select);
+        nav_select.setVisible(false);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.bloodbank;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -114,6 +117,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.des_select) {
+            Log.d("out","Me Erase You!");
+            Context ctx = getBaseContext();
+            SharedPreferences prefs = ctx.getSharedPreferences("com.example.bloodbank.usertoken", Context.MODE_PRIVATE);
+            prefs.edit().putString("token", "qqqaq").apply();
             NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(findViewById(R.id.nav_host_fragment)));
             return true;
         }

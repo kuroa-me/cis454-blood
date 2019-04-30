@@ -114,7 +114,7 @@ public class RegisterButtonClickListener implements View.OnClickListener, Reques
                         navController.navigate(R.id.action_des_reg_to_des_reque_dash);
                     }
                 } else {
-                    Log.d("misc", "invslid res");
+                    Log.d("misc", "invalid res");
                 }
             } else {
                 Log.d("misc", "not ok");
