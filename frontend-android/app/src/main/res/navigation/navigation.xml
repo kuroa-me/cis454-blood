@@ -78,7 +78,11 @@
         android:id="@+id/des_donor_vreq"
         android:name="com.example.bloodbank.donor_vreq"
         android:label="View Requests"
-        tools:layout="@layout/fragment_donor_vreq" />
+        tools:layout="@layout/fragment_donor_vreq" >
+        <action
+            android:id="@+id/action_des_donor_vreq_to_des_donor_dash"
+            app:destination="@id/des_donor_dash" />
+    </fragment>
     <fragment
         android:id="@+id/des_donor_donate"
         android:name="com.example.bloodbank.donor_donate"

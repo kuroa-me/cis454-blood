@@ -121,6 +121,7 @@ public class donor_vreq extends Fragment implements RequestCallback{
                 for (int i = 0; i<bloodRequest.length(); i++) {
                     JSONObject request = bloodRequest.getJSONObject(i);
                     donor_vreq_listitem listItem = new donor_vreq_listitem(
+                            request.getInt("id"),
                             request.getString("requester_name"),
                             request.getString("requester_age"),
                             request.getString("requester_sex")

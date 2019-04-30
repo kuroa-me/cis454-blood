@@ -17,6 +17,7 @@ public class donor_vreq_adapter extends RecyclerView.Adapter<donor_vreq_adapter.
 
     private List<donor_vreq_listitem> listItems;
     private Context context;
+    View mParent;
 
     public donor_vreq_adapter(List<donor_vreq_listitem> listItems, Context context) {
         this.listItems = listItems;
@@ -27,6 +28,7 @@ public class donor_vreq_adapter extends RecyclerView.Adapter<donor_vreq_adapter.
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.donor_vreq_listitem, parent, false);
+        mParent = v;
         return new ViewHolder(v);
     }
 
@@ -38,12 +40,7 @@ public class donor_vreq_adapter extends RecyclerView.Adapter<donor_vreq_adapter.
         holder.textViewAge.setText(listItem.getAge());
         holder.textViewSex.setText(listItem.getSex());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "you clicked " + listItem.getName(), Toast.LENGTH_LONG).show();
-            }
-        });
+        holder.linearLayout.setOnClickListener(new DonorAcceptClickListener(context, mParent, listItem.getId()));
     }
 
     @Override
@@ -67,4 +64,6 @@ public class donor_vreq_adapter extends RecyclerView.Adapter<donor_vreq_adapter.
             linearLayout = (LinearLayout) itemView.findViewById(R.id.donor_vreq_linearLayout);
         }
     }
+
+
 }

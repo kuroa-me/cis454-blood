@@ -150,11 +150,11 @@ public class APICaller {
         jsonRequest("donor/request/list", requestList, cb);
     }
 
-    void donorRequestAccpet(String token, int requestId, RequestCallback cb) throws JSONException{
+    void donorRequestAccept(String token, int requestId, RequestCallback cb) throws JSONException{
         JSONObject requestAccept = new JSONObject();
         requestAccept.put("token", token);
         requestAccept.put("request_id", requestId);
-        jsonRequest("donor/request/accpet", requestAccept, cb);
+        jsonRequest("donor/request/accept", requestAccept, cb);
     }
 
     void requesterRequestNew(String token, RequestCallback cb) throws JSONException{
