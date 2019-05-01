@@ -19,13 +19,13 @@ We will provide backend server until 7/1/2019. After that time, you could use th
 
 ## Functions
 ### Donor
-1. Upload Informations
+1. Upload Information
 2. Respond to donate request
 3. Donate blood
 4. View donation history
 
 ### Requestor
-1. Upload Informations
+1. Upload Information
 2. Make blood request
 3. Check request status
 4. View request history
