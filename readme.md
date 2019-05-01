@@ -1,5 +1,7 @@
 # Blood Bank -- we take your blood
 
+# __THE PROJECT REPORT IS IN THE DOC FOLDER!!!__
+
 ## Overview
 For this app, the normal users(donors and requesters) will use mobile phone to use this app(using android studio to write it), administrater will use website to manage user information(which is easier for administrater). Therefore, our project has mobile app for normal users and website for administraters.
 
