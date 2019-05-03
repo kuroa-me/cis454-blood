@@ -13,7 +13,10 @@ To login with administrater account, enter username "admin" with password "1", t
 
 
 ### Mobile
-The mobile client is for Android platform. To install it, kindly change directory to `cis454-blood/frontend-android/app/release/app-release.apk`. Put it into your android device and then double click it to proceed.
+The mobile client is for Android platform. To install it, kindly follow the directions below.
+1. Change directory to `cis454-blood/frontend-android/app/release/app-release.apk`. And copy that apk file to a convenient place.
+2. Follow the instructions in this [tutorial](https://www.droidviews.com/install-apk-files-using-adb-commands/)
+3. You should now be able to use our mobile client.
 
 ### Backend
 We will provide backend server until 7/1/2019. After that time, you could use the files in `cis454-blood/backend` to host your own backend server. All api calls are located in `cis454-blood/doc/api.md`. Do remember to change the server address in the frontend programs.
